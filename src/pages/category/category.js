@@ -2,12 +2,12 @@ import Taro, { useState, useEffect, useCallback } from '@tarojs/taro'
 import { useSelector, useDispatch } from '@tarojs/redux'
 import { createSelector } from 'reselect'
 import { View } from '@tarojs/components'
-import { dispatchCategoryList } from '@/actions/novel'
+import { dispatchCategoryList, dispatchCategoryList2 } from '@/actions/novel'
 
 import './category.scss'
 
 const selectCategoryList = createSelector(
-  state => state.novel.categoryList,
+  [state => state.novel.categoryList],
   list => list
 )
 
@@ -21,20 +21,27 @@ function Category() {
     () => dispatch(dispatchCategoryList()),
     [dispatch]
   )
+  // 获取二级类目列表
+  const initCategoryList2 = useCallback(
+    () => dispatch(dispatchCategoryList2()),
+    [dispatch]
+  )
 
   useEffect(() => {
     initCategoryList()
+    initCategoryList2()
   }, [])
 
-  const handleClickCategory = (category) => () => {
+  // 进入分类详情页
+  const handleClickCategory = (category, type) => () => {
     Taro.navigateTo({
-      url: `/pages/category-detail/category-detail?tag=${category.name}`
+      url: `/pages/category-detail/category-detail?major=${category.name}&type=${type}`
     })
   }
 
   const Male = categoryList.male.map((item, index) => {
     return <View className='category-list-item' hoverClass='hover' key={String(index)}
-      onClick={handleClickCategory(item)}>
+      onClick={handleClickCategory(item, 'male')}>
       <View className='category-list-item-name'>{item.name}</View>
       <View className='category-list-item-count'>{item.bookCount}本</View>
     </View>
@@ -42,7 +49,7 @@ function Category() {
 
   const FeMale = categoryList.female.map((item, index) => {
     return <View className='category-list-item' hoverClass='hover' key={String(index)}
-      onClick={handleClickCategory(item)}>
+      onClick={handleClickCategory(item, 'female')}>
       <View className='category-list-item-name'>{item.name}</View>
       <View className='category-list-item-count'>{item.bookCount}本</View>
     </View>
@@ -50,7 +57,7 @@ function Category() {
 
   const Press = categoryList.press.map((item, index) => {
     return <View className='category-list-item' hoverClass='hover' key={String(index)}
-      onClick={handleClickCategory(item)}>
+      onClick={handleClickCategory(item, 'press')}>
       <View className='category-list-item-name'>{item.name}</View>
       <View className='category-list-item-count'>{item.bookCount}本</View>
     </View>
@@ -58,7 +65,7 @@ function Category() {
 
   const Picture = categoryList.picture.map((item, index) => {
     return <View className='category-list-item' hoverClass='hover' key={String(index)}
-      onClick={handleClickCategory(item)}>
+      onClick={handleClickCategory(item, 'picture')}>
       <View className='category-list-item-name'>{item.name}</View>
       <View className='category-list-item-count'>{item.bookCount}本</View>
     </View>

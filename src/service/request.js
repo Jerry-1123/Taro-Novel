@@ -21,7 +21,7 @@ const request = ({ url, data = '' }, method = 'GET') => new Promise((resolve, re
     })
 })
 
-export const get = (url) => {
+export const get = (url, data) => {
     return request({ url })
 }
 
