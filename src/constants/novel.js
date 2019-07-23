@@ -4,7 +4,7 @@ export const QUERY_TYPE = [
         name: '热门'
     },
     {
-        type: 'news',
+        type: 'new',
         name: '新书'
     },
     {
@@ -22,3 +22,5 @@ export const QUERY_TYPE = [
 ]
 export const CATEGORY_LIST = 'CATEGORY_LIST'
 export const CATEGORY_LIST2 = 'CATEGORY_LIST2'
+export const CATEGORY_BOOKLIST = 'CATEGORY_BOOKLIST'
+export const CATEGORY_BOOKLIST_MORE ='CATEGORY_BOOKLIST_MORE'

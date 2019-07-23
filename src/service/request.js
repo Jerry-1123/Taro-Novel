@@ -22,7 +22,7 @@ const request = ({ url, data = '' }, method = 'GET') => new Promise((resolve, re
 })
 
 export const get = (url, data) => {
-    return request({ url })
+    return request({ url, data })
 }
 
 export const post = (url, data) => {

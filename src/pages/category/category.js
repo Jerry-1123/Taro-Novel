@@ -16,6 +16,7 @@ function Category() {
   const categoryList = useSelector(selectCategoryList)
 
   const dispatch = useDispatch()
+  
   // 获取类目列表
   const initCategoryList = useCallback(
     () => dispatch(dispatchCategoryList()),
@@ -33,9 +34,9 @@ function Category() {
   }, [])
 
   // 进入分类详情页
-  const handleClickCategory = (category, type) => () => {
+  const handleClickCategory = (category, gender) => () => {
     Taro.navigateTo({
-      url: `/pages/category-detail/category-detail?major=${category.name}&type=${type}`
+      url: `/pages/category-detail/category-detail?major=${category.name}&gender=${gender}`
     })
   }
 
