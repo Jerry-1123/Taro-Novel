@@ -1,4 +1,4 @@
-const config = {
+const Config = {
     /**
      * API域名
      */
@@ -13,4 +13,4 @@ const config = {
     chapterUrl: 'https://statics.zhuishushenqi.com'
 }
 
-export default config
+export default Config

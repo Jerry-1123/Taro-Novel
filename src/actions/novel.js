@@ -1,8 +1,10 @@
 import {
     CATEGORY_LIST,
-    CATEGORY_LIST2,
+    MINOR_LIST,
     CATEGORY_BOOKLIST,
-    CATEGORY_BOOKLIST_MORE
+    CATEGORY_BOOKLIST_MORE,
+    BOOK_DETAIL,
+    RECOMMED_LIST
 } from '@/constants/novel'
 
 import API from '@/service/api'
@@ -17,12 +19,12 @@ export const dispatchCategoryList = () => {
     }
 }
 
-export const dispatchCategoryList2 = () => {
+export const dispatchMinorList = () => {
     return async dispatch => {
-        const res = await API.Novel.getCategoryList2()
+        const res = await API.Novel.getMinorList()
         dispatch({
-            type: CATEGORY_LIST2,
-            categoryList2: res
+            type: MINOR_LIST,
+            minorList: res
         })
     }
 }
@@ -36,7 +38,7 @@ export const dispatchCategoryBookList = (type, major, start, minor, gender) => {
             type,
             major,
             start,
-            limit: 20,
+            limit: 50,
             minor,
             gender
         }
@@ -54,5 +56,25 @@ export const dispatchCategoryBookList = (type, major, start, minor, gender) => {
                 categoryBookListTotal: res.total
             })
         }
+    }
+}
+
+export const dispatchBookDetail = id => {
+    return async dispatch => {
+        const res = await API.Novel.getBookDetail(id)
+        dispatch({
+            type: BOOK_DETAIL,
+            bookDetail: res
+        })
+    }
+}
+
+export const dispatchRecommendList = id => {
+    return async dispatch => {
+        const res = await API.Novel.getRecommendList(id)
+        dispatch({
+            type: RECOMMED_LIST,
+            recommendList: res.books
+        })
     }
 }

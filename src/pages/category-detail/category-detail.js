@@ -1,164 +1,150 @@
-import Taro, { useState, useEffect, useCallback } from '@tarojs/taro'
-import { useSelector, useDispatch } from '@tarojs/redux'
-import { createSelector } from 'reselect'
-import { View, ScrollView, Image, Text } from '@tarojs/components'
+import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { connect } from '@tarojs/redux'
+import classNames from 'classNames'
 import { QUERY_TYPE } from '@/constants/novel'
 import { dispatchCategoryBookList } from '@/actions/novel'
-import classNames from 'classNames'
-import config from '@/config/config'
-import Util from '@/util/util'
 
 import './category-detail.scss'
 
-const selectCategoryList2 = (major, gender) => {
-    return createSelector(
-        [state => state.novel.categoryList2],
-        list => {
-            if (gender) return ['全部'].concat(list[gender].filter(item => item.major === major)[0].mins)
+import List from './list/list'
+
+@connect(
+    ({ novel }) => ({
+        list: novel.categoryBookList,
+        listTotal: novel.categoryBookListTotal,
+        minors: novel.minorList
+    }),
+    {
+        dispatchCategoryBookList
+    }
+)
+class CategoryDetail extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            minorList: [],
+            major: '',
+            gender: '',
+            navIndex: 0,
+            subNavIndex: 0,
+            startIndex: 0
         }
-    )
-}
+    }
 
-const selectCategoryBookList = () => {
-    return createSelector(
-        [state => state.novel.categoryBookList],
-        list => list
-    )
-}
-
-const selectCategoryBookListTotal = () => {
-    return createSelector(
-        [state => state.novel.categoryBookListTotal],
-        total => total
-    )
-}
-
-function CategoryDetail() {
-    const [navIndex, setNav] = useState(0)
-    const [subNavIndex, setSubNav] = useState(0)
-    const [startIndex, setStartIndex] = useState(0)
-    const [scrollHeight, setScrollHeight] = useState(0)
-    const [scrollTop, setScrollTop] = useState(0)
-    const dispatch = useDispatch()
-
-    const { major, gender } = this.$router.params
-
-    // 获取书单列表
-    const getCategoryBookList = useCallback(
-        (type, start, minor) => dispatch(dispatchCategoryBookList(type, major, start, minor, gender)),
-        [dispatch]
-    )
-
-    // 二级分类
-    const categoryList2 = useSelector(selectCategoryList2(major, gender))
-    // 书籍列表
-    const categoryBookList = useSelector(selectCategoryBookList())
-    // 书籍列表长度
-    const categoryBookListTotal = useSelector(selectCategoryBookListTotal())
-
-    useEffect(() => {
-        Taro.setNavigationBarTitle({ title: major })    // 设置标题
-        setScrollHeight(Taro.getSystemInfoSync().windowHeight)  // 给ScrollView高度
-    }, [])
-
-    useEffect(() => {
-        Taro.showLoading()
-        getCategoryBookList(QUERY_TYPE[navIndex].type, startIndex, categoryList2[subNavIndex]).then(() => {
-            Taro.hideLoading()
+    componentDidMount() {
+        const { major, gender } = this.$router.params
+        const { minors } = this.props
+        // 设置标题
+        Taro.setNavigationBarTitle({ title: major })
+        // 默认初始化
+        this.setState({
+            minorList: ['全部'].concat(minors[gender].filter(item => item.major === major)[0].mins),
+            major: major,
+            gender: gender
         })
-    }, [navIndex, startIndex, subNavIndex])
+    }
 
-    const handleClickNavItem = (index) => () => {
+    async getCategoryBookList() {
+        Taro.showLoading()
+        const {
+            minorList,
+            major,
+            gender,
+            navIndex,
+            subNavIndex,
+            startIndex
+        } = this.state
+        await this.props.dispatchCategoryBookList(QUERY_TYPE[navIndex].type, major, startIndex, minorList[subNavIndex], gender)
+        Taro.hideLoading()
+    }
+
+    handleClickNavItem = (index) => () => {
+        const { navIndex } = this.state
         if (index !== navIndex) {
-            setScrollTop(0)
-            setNav(index)
-            setStartIndex(0)
+            this.setState({
+                navIndex: index,
+                startIndex: 0
+            }, async () => {
+                await this.getCategoryBookList()
+                Taro.pageScrollTo({
+                    scrollTop: 0
+                })
+            })
         }
     }
 
-    const handleClickSubNavItem = (index) => () => {
+    handleClickSubNavItem = (index) => () => {
+        const { subNavIndex } = this.state
         if (index !== subNavIndex) {
-            setScrollTop(0)
-            setSubNav(index)
-            setStartIndex(0)
+            this.setState({
+                subNavIndex: index,
+                startIndex: 0
+            }, async () => {
+                await this.getCategoryBookList()
+                Taro.pageScrollTo({
+                    scrollTop: 0
+                })
+            })
         }
     }
 
-    const scrollToLower = () => () => {
-        if (categoryBookListTotal > categoryBookList.length) {
-            setStartIndex(startIndex + 20)
+    onReachBottom() {
+        const {
+            list,
+            listTotal
+        } = this.props
+        if (listTotal > list.length) {
+            this.setState(preState => ({
+                startIndex: preState.startIndex + 50
+            }), () => {
+                this.getCategoryBookList()
+            })
         }
     }
 
-    const handleScroll = () => (e) => {
-        const { scrollTop } = e.detail
-        setScrollTop(scrollTop)
-    }
+    render() {
 
-    return (
-        <View className='category'>
-            <View className='top'>
-                <ScrollView className='nav'>
-                    {QUERY_TYPE.map((item, index) => {
-                        return <View className={classNames({
-                            'nav-item': true,
-                            'active': index === navIndex
-                        })} key={String(index)} onClick={handleClickNavItem(index)}>
-                            {item.name}
-                        </View>
-                    })}
-                </ScrollView>
-                <ScrollView className='nav' scrollX>
-                    {categoryList2 &&
-                        categoryList2.map((item, index) => {
+        const {
+            navIndex,
+            subNavIndex,
+            minorList
+        } = this.state
+
+        const {
+            list,
+            listTotal
+        } = this.props
+
+        return (
+            <View className='detail'>
+                <View className='header'>
+                    <ScrollView className='nav'>
+                        {QUERY_TYPE.map((item, index) => {
+                            return <View className={classNames({
+                                'nav-item': true,
+                                'active': index === navIndex
+                            })} key={String(index)} onClick={this.handleClickNavItem(index)}>
+                                {item.name}
+                            </View>
+                        })}
+                    </ScrollView>
+                    <ScrollView className='nav' scrollX>
+                        {minorList.map((item, index) => {
                             return <View className={classNames({
                                 'nav-item': true,
                                 'active': index === subNavIndex
-                            })} key={String(index)} onClick={handleClickSubNavItem(index)}>
+                            })} key={String(index)} onClick={this.handleClickSubNavItem(index)}>
                                 {item}
                             </View>
                         })}
-                </ScrollView>
+                    </ScrollView>
+                </View>
+                <List categoryBookList={list} categoryBookListTotal={listTotal}/>
             </View>
-            <ScrollView className='list'
-                scrollY
-                lowerThreshold={100}
-                scrollTop={scrollTop}
-                style={{ height: `${scrollHeight}px` }}
-                onScrollToLower={scrollToLower()}
-                onScroll={handleScroll()}>
-                {categoryBookList.map(item => {
-                    return <View className='list-item' key={item.id}>
-                        <Image className='cover' src={config.staticUrl + item.cover} />
-                        <View className='right'>
-                            <View className='wrap'>
-                                <View className='name'>{item.title}</View>
-                            </View>
-                            <View className='wrap'>
-                                <View className='author'>{item.author}</View>
-                                <View className='split'>|</View>
-                                <View className='majorCate'>{item.majorCate}</View>
-                            </View>
-                            <View className='wrap'>
-                                <View className='info'>{item.shortIntro}</View>
-                            </View>
-                            <View className='wrap'>
-                                <View className='follow'>
-                                    <Text className='red'>{Util.getFollower(item.latelyFollower)}</Text>人气
-                                </View>
-                                <View className='split'>|</View>
-                                <View className='ratio'>
-                                    <Text className='red'>{item.retentionRatio}%</Text>读者留存
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                })}
-                {((categoryBookListTotal === categoryBookList.length) || categoryBookList.length < 20)
-                    && <View className='no-more'>没有更多书籍</View>}
-            </ScrollView>
-        </View>
-    )
+        )
+    }
 }
 
 export default CategoryDetail

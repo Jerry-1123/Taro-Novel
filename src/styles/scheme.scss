@@ -1,0 +1,34 @@
+/* ==================
+        标准色
+ ==================== */
+$white: #ffffff;
+$black: #333333;
+$darkBlack: #000000;
+$gray: #999999;
+$darkGray: #757575;
+$lightGray: #cccccc;
+$borderGray: #f8f8f8;
+$borderGray2: #dddddd;
+$hoverGray: #eeeeee;
+$claret: #b93321;
+$red: #ff0000;
+$lightOrange: #f5f2ed;
+// $gradualRed: linear-gradient(45deg, #f43f3b, #ec008c);
+// $gradualOrange: linear-gradient(45deg, #ff9700, #ed1c24);
+// $gradualGreen: linear-gradient(45deg, #39b54a, #8dc63f);
+// $gradualPurple: linear-gradient(45deg, #9000ff, #5e00ff);
+// $gradualPink: linear-gradient(45deg, #ec008c, #6739b6);
+// $gradualBlue: linear-gradient(45deg, #0081ff, #1cbbb4);
+/* ==================
+        字体库
+ ==================== */
+@font-face {
+  font-family: "novel";
+  src: url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.eot");
+  src: url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.woff") format("woff"),
+    url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_1341091_kracrw8zh5h.svg#novel") format("svg");
+}

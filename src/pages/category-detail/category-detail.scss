@@ -1,12 +1,12 @@
-.category {
-  position: relative;
+@import "@/styles/scheme.scss";
 
-  .top {
+.detail {
+  .header {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
-    background: #ffffff;
+    background: $white;
     width: 100%;
 
     .nav {
@@ -16,7 +16,7 @@
       height: 75px;
       line-height: 70px;
       font-size: 28rpx;
-      border-bottom: 1px solid #dddddd;
+      border-bottom: 1px solid $borderGray2;
       white-space: nowrap;
 
       &-item {
@@ -28,72 +28,9 @@
         }
 
         &.active {
-          color: #b93321;
+          color: $claret;
         }
       }
-    }
-  }
-
-  .list {
-    z-index: 1;
-    height: 1200rpx;
-    padding-top: 140rpx;
-    background: #f5f2ed;
-
-    &-item {
-      padding: 20rpx;
-      display: flex;
-      align-items: center;
-      box-sizing: border-box;
-      border-bottom: 1px solid #dddddd;
-
-      .cover {
-        width: 150rpx;
-        height: 201rpx;
-        flex-shrink: 0;
-      }
-
-      .right {
-        width: 100%;
-        font-size: 26rpx;
-        color: #999999;
-        margin-left: 20rpx;
-
-        .name {
-          font-size: 30rpx;
-          font-weight: bold;
-          color: #333333;
-        }
-
-        .wrap {
-          display: flex;
-          align-items: center;
-          margin: 15rpx 0;
-
-          .split {
-            margin: 0 20rpx;
-          }
-        }
-
-        .info {
-          width: 530px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .red {
-          color: red;
-        }
-      }
-    }
-
-    .no-more {
-      color: #999999;
-      width: 100%;
-      font-size: 26rpx;
-      line-height: 80rpx;
-      text-align: center;
     }
   }
 }

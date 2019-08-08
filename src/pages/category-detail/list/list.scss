@@ -1,0 +1,15 @@
+@import "@/styles/scheme.scss";
+
+.list {
+  z-index: 1;
+  padding-top: 140rpx;
+
+  .no-more {
+    color: $gray;
+    width: 100%;
+    font-size: 26rpx;
+    line-height: 80rpx;
+    text-align: center;
+  }
+}
+
