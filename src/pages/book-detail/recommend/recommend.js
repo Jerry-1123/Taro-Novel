@@ -1,6 +1,5 @@
 import Taro, { useCallback } from '@tarojs/taro'
-import { useSelector, useDispatch } from '@tarojs/redux'
-import { createSelector } from 'reselect'
+import { useDispatch } from '@tarojs/redux'
 import { View } from '@tarojs/components'
 import Config from '@/config/config'
 import {
@@ -48,7 +47,7 @@ function Recommend({ recommendList = [] }) {
                 <View className='more' hoverClass='hover' onClick={goBookRecommend}>更多</View>
             </View>
             <View className='comment'>
-                {recommendList.map((item, index) => {
+                {recommendList.slice(0, 4).map((item, index) => {
                     return <View className='comment-item' hoverClass='hover'
                         key={String(index)} onClick={goBookDetail(item._id)}>
                         <Image className='cover' src={Config.staticUrl + item.cover} />

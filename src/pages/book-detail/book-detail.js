@@ -40,7 +40,7 @@ class BookDetail extends Component {
     }
 
     onShareAppMessage() {
-        const { bookDetail } = this.props
+        const { bookDetail } = this.state
         return {
             title: bookDetail.title,
             path: 'pages/index/index',

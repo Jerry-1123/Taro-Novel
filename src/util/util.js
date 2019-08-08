@@ -50,12 +50,21 @@ const Util = {
         return Taro.clearStorageSync()
     },
 
-    getFollower(follower) {
+    getFollower: follower => {
         if (follower > 9999) {
             const number = follower / 10000
             return Math.round(number * 10) / 10 + '万'
         } else {
             return follower
+        }
+    },
+
+    getWordCount: wordCount => {
+        if (wordCount > 9999) {
+            const number = parseInt(wordCount / 10000)
+            return number + '万'
+        } else {
+            return wordCount
         }
     }
 }

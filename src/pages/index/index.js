@@ -12,7 +12,7 @@ function Index() {
 
   return (
     <View className='index'>
-
+        22
     </View>
   )
 }

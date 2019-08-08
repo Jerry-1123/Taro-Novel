@@ -1,0 +1,99 @@
+@import "@/styles/scheme.scss";
+
+.book {
+  &-detail {
+    display: flex;
+    align-items: center;
+    padding: 20rpx;
+
+    .cover {
+      width: 162rpx;
+      height: 216rpx;
+    }
+
+    .desc {
+      margin-left: 20rpx;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .title {
+        font-size: 32rpx;
+        font-weight: bold;
+        color: $black;
+        margin: 10rpx 0;
+      }
+
+      .sku {
+        font-size: 26rpx;
+        color: $gray;
+        display: flex;
+        align-items: center;
+        margin: 10rpx 0;
+
+        .author {
+          color: $claret;
+        }
+
+        .split {
+          margin: 0 20rpx;
+        }
+      }
+
+      .serial {
+        font-size: 26rpx;
+        color: $gray;
+        margin: 10rpx 0;
+      }
+    }
+  }
+
+  &-reader {
+    display: flex;
+    align-items: center;
+    margin: 10rpx 0;
+    padding: 20rpx;
+
+    .item {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .key {
+        font-size: 26rpx;
+        color: $gray;
+      }
+
+      .val {
+        margin-top: 5rpx;
+        font-size: 32rpx;
+        color: $black;
+      }
+    }
+  }
+
+  &-intro {
+    padding: 20rpx 30rpx;
+    margin-bottom: 30rpx;
+    border-bottom: 1px solid $borderGray2;
+
+    .intro {
+      font-size: 26rpx;
+      color: $black;
+      line-height: 1.8;
+    }
+  }
+
+  .box {
+    display: flex;
+
+    .tip {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: $black;
+      border-left: 8rpx solid $claret;
+      padding-left: 20rpx;
+    }
+  }
+}
