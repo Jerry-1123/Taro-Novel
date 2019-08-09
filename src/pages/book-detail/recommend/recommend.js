@@ -4,7 +4,7 @@ import { View } from '@tarojs/components'
 import Config from '@/config/config'
 import {
     dispatchBookDetail,
-    dispatchRecommendList
+    dispatchRecommendBookList
 } from '@/actions/novel'
 
 import './recommend.scss'
@@ -20,7 +20,7 @@ function Recommend({ recommendList = [] }) {
 
     // 获取推荐列表
     const getRecommendList = useCallback(
-        id => dispatch(dispatchRecommendList(id)),
+        id => dispatch(dispatchRecommendBookList(id)),
         [dispatch]
     )
 

@@ -12,7 +12,7 @@ import Recommend from './recommend/recommend'
 @connect(
     ({ novel }) => ({
         detail: novel.bookDetail,
-        recommend: novel.recommendList
+        recommend: novel.recommendBookList
     }),
     {}
 )

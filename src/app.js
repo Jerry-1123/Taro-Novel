@@ -17,6 +17,7 @@ class App extends Component {
       'pages/index/index',
       'pages/book-detail/book-detail',
       'pages/book-recommend/book-recommend',
+      'pages/book-tag/book-tag',
       'pages/discovery/discovery',
       'pages/category/category',
       'pages/category-detail/category-detail'

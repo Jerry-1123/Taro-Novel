@@ -97,7 +97,7 @@ class CategoryDetail extends Component {
         } = this.props
         if (listTotal > list.length) {
             this.setState(preState => ({
-                startIndex: preState.startIndex + 50
+                startIndex: preState.startIndex + 20
             }), () => {
                 this.getCategoryBookList()
             })

@@ -1,12 +1,30 @@
-import Taro from '@tarojs/taro'
+import Taro, { useCallback } from '@tarojs/taro'
+import { useDispatch } from '@tarojs/redux'
 import { View } from '@tarojs/components'
 import Config from '@/config/config'
 import Util from '@/util/util'
 import { format } from 'timeago.js'
+import { dispatchTagBookList } from '@/actions/novel'
 
 import './content.scss'
 
 function Content({ bookDetail = {} }) {
+    const dispatch = useDispatch()
+
+    // 获取标签推荐书籍
+    const getTagBookList = useCallback(
+        (tags, start) => dispatch(dispatchTagBookList(tags, start)),
+        [dispatch]
+    )
+
+    const goBookTag = (tag) => async () => {
+        Taro.showLoading()
+        await getTagBookList(tag, 0)
+        Taro.navigateTo({
+            url: `/pages/book-tag/book-tag?tag=${tag}`
+        })
+        Taro.hideLoading()
+    }
 
     return (
         <View className='book'>
@@ -41,12 +59,20 @@ function Content({ bookDetail = {} }) {
                     <View className='val'>{bookDetail.serializeWordCount}</View>
                 </View>
             </View>
-            <View className='box'>
-                <View className='tip'>详情</View>
-            </View>
-            <View className='book-intro'>
-                <View className='intro'>{bookDetail.longIntro}</View>
-            </View>
+            <View className='tip'>简介</View>
+            <View className='book-intro'>{bookDetail.longIntro}</View>
+            {(bookDetail.tags && bookDetail.tags.length > 0)
+                && <View>
+                    <View className='tip'>标签</View>
+                    <View className='book-tag'>
+                        {bookDetail.tags.map((item, index) => {
+                            return <View className='item' hoverClass='hover'
+                                key={String(index)} onClick={goBookTag(item)}>
+                                {item}
+                            </View>
+                        })}
+                    </View>
+                </View>}
         </View>
     )
 }

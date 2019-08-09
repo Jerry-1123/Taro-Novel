@@ -77,23 +77,39 @@
     padding: 20rpx 30rpx;
     margin-bottom: 30rpx;
     border-bottom: 1px solid $borderGray2;
+    font-size: 26rpx;
+    color: $black;
+    line-height: 1.8;
+  }
 
-    .intro {
+  &-tag {
+    padding: 20rpx 20rpx 10rpx;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30rpx;
+    border-bottom: 1px solid $borderGray2;
+
+    .item {
       font-size: 26rpx;
       color: $black;
-      line-height: 1.8;
+      border: 1px solid $borderGray2;
+      border-radius: 50rpx;
+      padding: 10rpx 25rpx;
+      margin-right: 20rpx;
+      margin-bottom: 20rpx;
     }
   }
 
-  .box {
-    display: flex;
-
-    .tip {
-      font-size: 32rpx;
-      font-weight: bold;
-      color: $black;
-      border-left: 8rpx solid $claret;
-      padding-left: 20rpx;
-    }
+  .tip {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: $black;
+    border-left: 8rpx solid $claret;
+    padding-left: 20rpx;
   }
+}
+
+.hover {
+  opacity: 0.8;
 }

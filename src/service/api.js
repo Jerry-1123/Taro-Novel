@@ -10,7 +10,7 @@ const API = {
             return Request.get(`${API_URL}/book/${id}`)
         },
         // 获取推荐列表
-        getRecommendList: id => {
+        getRecommendBookList: id => {
             return Request.get(`${API_URL}/book/${id}/recommend`)
         },
         // 获取所有排行榜
@@ -25,9 +25,13 @@ const API = {
         getMinorList: () => {
             return Request.get(`${API_URL}/cats/lv2`)
         },
-        // 获取书单列表
-        getCategoryBookList: (params) => {
+        // 根据分类获取书籍列表
+        getCategoryBookList: params => {
             return Request.get(`${API_URL}/book/by-categories`, params)
+        },
+        // 根据标签获取书籍列表
+        getTagBookList: params => {
+            return Request.get(`${API_URL}/book/by-tags`, params)
         }
     }
 }

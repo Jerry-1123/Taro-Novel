@@ -5,7 +5,7 @@ import Util from '@/util/util'
 import Config from '@/config/config'
 import {
     dispatchBookDetail,
-    dispatchRecommendList
+    dispatchRecommendBookList
 } from '@/actions/novel'
 
 import './novel-item.scss'
@@ -21,7 +21,7 @@ function NovelItem({ novel = {} }) {
 
     // 获取推荐列表
     const getRecommendList = useCallback(
-        id => dispatch(dispatchRecommendList(id)),
+        id => dispatch(dispatchRecommendBookList(id)),
         [dispatch]
     )
 
