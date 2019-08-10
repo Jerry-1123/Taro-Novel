@@ -2,6 +2,7 @@ import Config from '@/config/config'
 import Request from './request'
 
 const API_URL = Config.apiUrl
+const API_URL2 = Config.apiUrl2
 
 const API = {
     Novel: {
@@ -32,6 +33,14 @@ const API = {
         // 根据标签获取书籍列表
         getTagBookList: params => {
             return Request.get(`${API_URL}/book/by-tags`, params)
+        },
+        // 获取作者书籍列表
+        getAuthorBookList: author => {
+            return Request.get(`${API_URL2}/books/accurate-search-author?author=${author}&packageName`)
+        },
+        // 获取章节目录
+        getChapterList: id => {
+            return Request.get(`${API_URL}/mix-atoc/${id}?view=chapters`)
         }
     }
 }

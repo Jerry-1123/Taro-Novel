@@ -6,7 +6,6 @@ import { View } from '@tarojs/components'
 import './book-recommend.scss'
 
 import NovelItem from '@/components/novel-item/novel-item'
-import NoMore from '@/components/no-more/no-more'
 
 const selectRecommendList = () => {
     return createSelector(
@@ -29,7 +28,6 @@ function BookRecommend() {
     return (
         <View className='recommend'>
             {bookRecommend.map(item => <NovelItem novel={item} key={item._id} />)}
-            <NoMore />
         </View>
     )
 }

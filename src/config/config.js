@@ -4,6 +4,10 @@ const Config = {
      */
     apiUrl: 'https://api.zhuishushenqi.com',
     /**
+     * API域名
+     */
+    apiUrl2:'https://b.zhuishushenqi.com',
+    /**
      * 图片域名
      */
     staticUrl: 'https://statics.zhuishushenqi.com',

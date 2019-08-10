@@ -18,9 +18,11 @@ class App extends Component {
       'pages/book-detail/book-detail',
       'pages/book-recommend/book-recommend',
       'pages/book-tag/book-tag',
+      'pages/book-author/book-author',
       'pages/discovery/discovery',
       'pages/category/category',
-      'pages/category-detail/category-detail'
+      'pages/category-detail/category-detail',
+      'pages/chapter/chapter'
     ],
     window: {
       backgroundTextStyle: 'light',

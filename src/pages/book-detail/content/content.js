@@ -4,7 +4,11 @@ import { View } from '@tarojs/components'
 import Config from '@/config/config'
 import Util from '@/util/util'
 import { format } from 'timeago.js'
-import { dispatchTagBookList } from '@/actions/novel'
+import {
+    dispatchTagBookList,
+    dispatchAuthorBookList,
+    dispatchChapterList
+} from '@/actions/novel'
 
 import './content.scss'
 
@@ -17,11 +21,41 @@ function Content({ bookDetail = {} }) {
         [dispatch]
     )
 
-    const goBookTag = (tag) => async () => {
+    // 获取作者书籍列表
+    const getAuthorBookList = useCallback(
+        author => dispatch(dispatchAuthorBookList(author)),
+        [useDispatch]
+    )
+
+    // 获取章节列表
+    const getChapterList = useCallback(
+        id => dispatch(dispatchChapterList(id)),
+        [useDispatch]
+    )
+
+    const goBookTag = tag => async () => {
         Taro.showLoading()
         await getTagBookList(tag, 0)
         Taro.navigateTo({
             url: `/pages/book-tag/book-tag?tag=${tag}`
+        })
+        Taro.hideLoading()
+    }
+
+    const goAuthorBook = author => async () => {
+        Taro.showLoading()
+        await getAuthorBookList(author)
+        Taro.navigateTo({
+            url: `/pages/book-author/book-author?author=${author}`
+        })
+        Taro.hideLoading()
+    }
+
+    const goChapter = (id, title) => async () => {
+        Taro.showLoading()
+        await getChapterList(id)
+        Taro.navigateTo({
+            url: `/pages/chapter/chapter?title=${title}`
         })
         Taro.hideLoading()
     }
@@ -33,11 +67,14 @@ function Content({ bookDetail = {} }) {
                 <View className='desc'>
                     <View className='title'>{bookDetail.title}</View>
                     <View className='sku'>
-                        <View className='author'>{bookDetail.author}</View>
+                        <View className='author' hoverClass='red'
+                            onClick={goAuthorBook(bookDetail.author)}>
+                            {bookDetail.author}
+                        </View>
                         <View className='split'>|</View>
-                        <View classNam='minor'>{bookDetail.minorCate}</View>
-                        <View className='split'>|</View>
-                        <View className='count'>{Util.getWordCount(bookDetail.wordCount)}字</View>
+                        <View classNam='minor'>{bookDetail.majorCate}</View>
+                        {bookDetail.contentType !== 'picture' && <View className='split'>|</View>}
+                        {bookDetail.contentType !== 'picture' && <View className='count'>{Util.getWordCount(bookDetail.wordCount)}字</View>}
                     </View>
                     <View className='serial'>
                         {bookDetail.isSerial && <View>{format(bookDetail.updated, 'zh_CN')}更新</View>}
@@ -54,13 +91,25 @@ function Content({ bookDetail = {} }) {
                     <View className='key'>读者留存率</View>
                     <View className='val'>{bookDetail.retentionRatio}%</View>
                 </View>
-                <View className='item'>
-                    <View className='key'>更新字数/日</View>
-                    <View className='val'>{bookDetail.serializeWordCount}</View>
-                </View>
+                {bookDetail.contentType !== 'picture'
+                    && <View className='item'>
+                        <View className='key'>更新字数/日</View>
+                        <View className='val'>{bookDetail.serializeWordCount}</View>
+                    </View>}
             </View>
             <View className='tip'>简介</View>
             <View className='book-intro'>{bookDetail.longIntro}</View>
+            <View className='book-catalog'>
+                <View className='tip'>目录</View>
+                <View className='more' hoverClass='hover'
+                    onClick={goChapter(bookDetail._id, bookDetail.title)}>
+                    {bookDetail.isSerial && <View>[{format(bookDetail.updated, 'zh_CN')}更新]</View>}
+                    {!bookDetail.isSerial && <View>[完结]</View>}
+                    <View className='chapter'>{bookDetail.lastChapter}</View>
+                    <View className='go'></View>
+                </View>
+            </View>
+            <View className='line'></View>
             {(bookDetail.tags && bookDetail.tags.length > 0)
                 && <View>
                     <View className='tip'>标签</View>

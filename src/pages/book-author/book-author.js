@@ -1,31 +1,31 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
+import { View } from '@tarojs/components'
 import { useSelector } from '@tarojs/redux'
 import { createSelector } from 'reselect'
-import { View } from '@tarojs/components'
 
-import './book-tag.scss'
+import './book-author.scss'
 
 import NovelItem from '@/components/novel-item/novel-item'
 
-const selectTagBookList = () => {
+const selecAuthorBookList = () => {
     return createSelector(
-        [state => state.novel.tagBookList],
-        tagBookList => tagBookList
+        [state => state.novel.authorBookList],
+        authorBookList => authorBookList
     )
 }
 
-function BookTag() {
+function BookAuthor() {
 
     const [bookList, setBookList] = useState([])
 
-    const tagBookList = useSelector(selectTagBookList())
+    const authorBookList = useSelector(selecAuthorBookList())
 
-    const { tag } = this.$router.params
+    const { author } = this.$router.params
 
     useEffect(() => {
         // 设置标题
-        Taro.setNavigationBarTitle({ title: tag })
-        setBookList(tagBookList)
+        Taro.setNavigationBarTitle({ title: author })
+        setBookList(authorBookList)
     }, [])
 
     return (
@@ -35,4 +35,4 @@ function BookTag() {
     )
 }
 
-export default BookTag
+export default BookAuthor

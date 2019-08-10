@@ -5,7 +5,9 @@ import {
   CATEGORY_BOOKLIST_MORE,
   BOOK_DETAIL,
   RECOMMED_BOOKLIST,
-  TAG_BOOKLIST
+  TAG_BOOKLIST,
+  AUTHOR_BOOKLIST,
+  CHAPTER_LIST
 } from '@/constants/novel'
 
 const defaultState = {
@@ -25,7 +27,9 @@ const defaultState = {
   categoryBookListTotal: 0,
   recommendBookList: [],
   tagBookList: [],
+  authorBookList: [],
   bookDetail: {},
+  chapterList: []
 }
 
 export default function counter(state = defaultState, action) {
@@ -66,6 +70,16 @@ export default function counter(state = defaultState, action) {
       return {
         ...state,
         tagBookList: action.tagBookList
+      }
+    case AUTHOR_BOOKLIST:
+      return {
+        ...state,
+        authorBookList: action.authorBookList
+      }
+    case CHAPTER_LIST:
+      return {
+        ...state,
+        chapterList: action.chapterList
       }
     default:
       return state

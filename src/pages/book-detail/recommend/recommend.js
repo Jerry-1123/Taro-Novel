@@ -42,19 +42,22 @@ function Recommend({ recommendList = [] }) {
 
     return (
         <View>
-            <View className='box'>
-                <View className='tip'>你可能会喜欢</View>
-                <View className='more' hoverClass='hover' onClick={goBookRecommend}>更多</View>
-            </View>
-            <View className='comment'>
-                {recommendList.slice(0, 4).map((item, index) => {
-                    return <View className='comment-item' hoverClass='hover'
-                        key={String(index)} onClick={goBookDetail(item._id)}>
-                        <Image className='cover' src={Config.staticUrl + item.cover} />
-                        <View className='title'>{item.title}</View>
+            {recommendList.length > 0
+                && <View>
+                    <View className='box'>
+                        <View className='tip'>你可能会喜欢</View>
+                        <View className='more' hoverClass='hover' onClick={goBookRecommend}>更多</View>
                     </View>
-                })}
-            </View>
+                    <View className='comment'>
+                        {recommendList.slice(0, 4).map((item, index) => {
+                            return <View className='comment-item' hoverClass='hover'
+                                key={String(index)} onClick={goBookDetail(item._id)}>
+                                <Image className='cover' src={Config.staticUrl + item.cover} />
+                                <View className='title'>{item.title}</View>
+                            </View>
+                        })}
+                    </View>
+                </View>}
         </View>
     )
 }
