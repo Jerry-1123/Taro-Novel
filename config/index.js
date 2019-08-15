@@ -1,22 +1,6 @@
-const path = require('path')
-
-// NOTE 在 sass 中通过别名（@ 或 ~）引用需要指定路径
-const sassImporter = function (url) {
-  if (url[0] === '~' && url[1] !== '/') {
-    return {
-      file: path.resolve(__dirname, '..', 'node_modules', url.substr(1))
-    }
-  }
-
-  const reg = /^@\/styles\/(.*)/
-  return {
-    file: reg.test(url) ? path.resolve(__dirname, '..', 'src/styles', url.match(reg)[1]) : url
-  }
-}
-
 const config = {
   projectName: 'X-Novel',
-  date: '2019-7-1',
+  date: '2019-8-15',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
@@ -38,24 +22,9 @@ const config = {
         'transform-class-properties',
         'transform-object-rest-spread'
       ]
-    },
-    sass: {
-      importer: sassImporter
     }
   },
   defineConstants: {
-  },
-  alias: {
-    '@/actions': path.resolve(__dirname, '..', 'src/actions'),
-    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
-    '@/common': path.resolve(__dirname, '..', 'src/common'),
-    '@/components': path.resolve(__dirname, '..', 'src/components'),
-    '@/config': path.resolve(__dirname, '..', 'src/config'),
-    '@/constants': path.resolve(__dirname, '..', 'src/constants'),
-    '@/pages': path.resolve(__dirname, '..', 'src/pages'),
-    '@/reducers': path.resolve(__dirname, '..', 'src/reducers'),
-    '@/service': path.resolve(__dirname, '..', 'src/service'),
-    '@/util': path.resolve(__dirname, '..', 'src/util')
   },
   copy: {
     patterns: [

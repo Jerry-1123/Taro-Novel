@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import novel from './novel'
+import counter from './counter'
 
 export default combineReducers({
-  novel
+  counter
 })
