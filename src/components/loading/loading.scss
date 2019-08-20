@@ -1,0 +1,36 @@
+@import "@/styles/scheme.scss";
+
+.body {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loading {
+    width: 50rpx;
+    height: 50rpx;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    margin: 5rpx;
+    border-width: 5rpx;
+    border-style: solid;
+    border-color: $Black transparent transparent;
+    border-radius: 100%;
+    animation: loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

@@ -2,9 +2,9 @@
   "miniprogramRoot": "./dist",
   "projectname": "X-Novel",
   "description": "X-Novel",
-  "appid": "touristappid",
+  "appid": "wx2c277dc116b8d4cd",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "postcss": false,
     "minified": false

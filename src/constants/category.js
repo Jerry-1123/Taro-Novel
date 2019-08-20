@@ -1,0 +1,4 @@
+export const STATICS = 'STATICS'
+export const CATS = 'CATS'
+export const CLEAR_CATEGORY_BOOK_LIST = 'CLEAR_CATEGORY_BOOK_LIST'
+export const CATEGORY_BOOK_LIST = 'CATEGORY_BOOK_LIST'

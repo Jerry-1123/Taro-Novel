@@ -1,0 +1,42 @@
+@import "@/styles/scheme.scss";
+
+.category {
+  .tab {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid $LineGray;
+
+    &-item {
+      text-align: center;
+      position: relative;
+      font-size: 26rpx;
+
+      .title {
+        color: $Black;
+
+        &-active {
+          color: $Red;
+        }
+      }
+
+      .underline {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 5px;
+        width: 100%;
+        background-color: $Red;
+        transform: scaleX(0);
+        transition: all 0.15s ease-in-out;
+        border-radius: 100rpx;
+
+        &-active {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+}

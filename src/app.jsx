@@ -8,39 +8,69 @@ import configStore from './store'
 
 import './app.scss'
 
-// 如果需要在 h5 环境中开启 React Devtools
-// 取消以下注释：
-// if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
-//   require('nerv-devtools')
-// }
-
 const store = configStore()
 
 class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/mall/mall',
+      'pages/category/category',
+      'pages/user/user',
+      'pages/category-detail/category-detail'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: "#dbdbdb",
+      selectedColor: "#757575",
+      backgroundColor: "#ffffff",
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: "pages/index/index",
+          iconPath: "./assets/images/default.png",
+          selectedIconPath: "./assets/images/default_selected.png",
+          text: "首页"
+        },
+        {
+          pagePath: "pages/mall/mall",
+          iconPath: "./assets/images/default.png",
+          selectedIconPath: "./assets/images/default_selected.png",
+          text: "书城"
+        },
+        {
+          pagePath: "pages/category/category",
+          iconPath: "./assets/images/default.png",
+          selectedIconPath: "./assets/images/default_selected.png",
+          text: "分类"
+        },
+        {
+          pagePath: "pages/user/user",
+          iconPath: "./assets/images/default.png",
+          selectedIconPath: "./assets/images/default_selected.png",
+          text: "我的"
+        },
+      ]
     }
   }
 
-  componentDidMount () {}
+  componentDidMount() { }
 
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentDidCatchError () {}
+  componentDidCatchError() { }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Index />

@@ -1,0 +1,23 @@
+@import "@/styles/scheme.scss";
+
+page {
+  height: 100%;
+  background: $White;
+}
+
+image {
+  width: 100%;
+  display: block;
+}
+
+view,
+text,
+scroll-view {
+  box-sizing: border-box;
+}
+
+button {
+  &:after {
+    display: none;
+  }
+}
