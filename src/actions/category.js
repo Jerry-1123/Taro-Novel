@@ -48,12 +48,11 @@ export const dispatchCategoryBookList =
                 packageName: '',
                 token: ''
             }
-            console.log(params)
             const res = await API.Category.getCategoryBookList(params)
-            console.log(res)
             dispatch({
                 type: CATEGORY_BOOK_LIST,
-                categoryBookList: res
+                categoryBookList: res.books,
+                categoryBookListTotal: res.total
             })
         }
     }

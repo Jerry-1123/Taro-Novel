@@ -12,7 +12,7 @@ import './category.scss'
 
 import Loading from '@/components/loading/loading'
 
-import List from './list/list'
+import Item from './item/item'
 
 const selectStatics = () => {
     return createSelector(
@@ -90,10 +90,18 @@ function Category() {
                 current={current}
                 onChange={handleChangeSwiper}>
                 <SwiperItem>
-                    {statics.male && <List list={statics.male} />}
+                    {statics.male && <View className='books'>
+                        {statics.male.map((item, index) => {
+                            return <Item key={String(index)} item={item} />
+                        })}
+                    </View>}
                 </SwiperItem>
                 <SwiperItem>
-                    {statics.female && <List list={statics.female} />}
+                    {statics.female && <View className='books'>
+                        {statics.female.map((item, index) => {
+                            return <Item key={String(index)} item={item} />
+                        })}
+                    </View>}
                 </SwiperItem>
             </Swiper>
         </View >

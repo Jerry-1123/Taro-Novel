@@ -8,7 +8,8 @@ import {
 const defaultState = {
     statics: {},
     cats: {},
-    categoryBookList: []
+    categoryBookList: [],
+    categoryBookListTotal: 0
 }
 
 export default function counter(state = defaultState, action) {
@@ -27,12 +28,14 @@ export default function counter(state = defaultState, action) {
         case CLEAR_CATEGORY_BOOK_LIST:
             return {
                 ...state,
-                categoryBookList: []
+                categoryBookList: [],
+                categoryBookListTotal: 0
             }
         case CATEGORY_BOOK_LIST:
             return {
                 ...state,
-                categoryBookList: state.categoryBookList.concat(action.categoryBookList)
+                categoryBookList: state.categoryBookList.concat(action.categoryBookList),
+                categoryBookListTotal: action.categoryBookListTotal
             }
         default:
             return state

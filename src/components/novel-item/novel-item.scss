@@ -1,0 +1,80 @@
+@import "@/styles/scheme.scss";
+
+.novel {
+  display: flex;
+  padding: 12rpx;
+
+  .cover {
+    width: 140rpx;
+    height: 190rpx;
+    box-shadow: 0 0 10px 0 $ShadowBlack;
+    flex-shrink: 0;
+    margin-right: 25rpx;
+  }
+
+  .right {
+    flex-grow: 1;
+
+    .title {
+      font-size: 30rpx;
+      color: $Black;
+    }
+
+    .shortIntro {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      font-size: 22rpx;
+      color: $DarkGray;
+      margin: 25rpx 0;
+    }
+
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .author {
+        font-family: "novel";
+        font-style: normal;
+        font-size: 24rpx;
+        color: $Black;
+
+        &::before {
+          content: "\e670";
+          color: #adadad;
+          margin-right: 10rpx;
+        }
+      }
+
+      .info {
+        display: flex;
+        align-items: center;
+
+        .minorCate {
+          font-size: 18rpx;
+          font-weight: bold;
+          color: $DarkGray;
+          background: $LightGray;
+          border-radius: 100rpx;
+          padding: 6rpx 20rpx;
+          margin-right: 15rpx;
+        }
+
+        .latelyFollower {
+          font-size: 18rpx;
+          font-weight: bold;
+          color: $Red;
+          background: $LightRed;
+          border-radius: 100rpx;
+          padding: 6rpx 20rpx;
+        }
+      }
+    }
+  }
+}
+
+.hover {
+  opacity: 0.8;
+}

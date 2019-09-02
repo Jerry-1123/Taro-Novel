@@ -2,7 +2,8 @@ const Config = {
     /**
      * API域名
      */
-    apiUrl: 'https://b.zhuishushenqi.com',
+    apiUrl1: 'https://b.zhuishushenqi.com',
+    apiUrl2: 'https://api.zhuishushenqi.com',
     /**
      * 图片域名
      */

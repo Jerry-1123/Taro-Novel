@@ -3,12 +3,14 @@ import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import classNames from 'classnames'
 import {
-    dispatchCategoryBookList
+    dispatchCategoryBookList,
+    dispatchClearCategory
 } from '@/actions/category.js'
 
 import './category-detail.scss'
 
-import Loading from '@/components/loading/loading'
+import NovelItem from '@/components/novel-item/novel-item'
+import NoMore from '@/components/no-more/no-more'
 
 const aliasList = [
     {
@@ -65,10 +67,13 @@ const wordCountList = [
 
 @connect(
     ({ category }) => ({
-        cats: category.cats
+        cats: category.cats,
+        categoryBookList: category.categoryBookList,
+        categoryBookListTotal: category.categoryBookListTotal
     }),
     {
-        dispatchCategoryBookList
+        dispatchCategoryBookList,
+        dispatchClearCategory
     }
 )
 class CategoryDetail extends Component {
@@ -88,7 +93,8 @@ class CategoryDetail extends Component {
             bookStatus: '',
             bookIndeedStatus: '',
             countItems: [],
-            countIndeedItems: []
+            countIndeedItems: [],
+            showNoMore: false
         }
     }
 
@@ -102,14 +108,28 @@ class CategoryDetail extends Component {
             alias: alias,
             gender: gender,
             name: name
+        }, () => {
+            this.fetchList()
         })
         Taro.setNavigationBarTitle({
             title: name
         })
-        this.fetchList()
     }
 
-    fetchList() {
+    // 卸载清除状态机数据
+    componentWillUnmount() {
+        this.props.dispatchClearCategory()
+    }
+
+    fetchList = async () => {
+        this.setState({
+            showNoMore: false
+        })
+
+        Taro.showLoading({
+            title: '加载中'
+        })
+
         const {
             start,
             alias,
@@ -121,19 +141,26 @@ class CategoryDetail extends Component {
 
         let count = []
         for (let i = 0; i < countIndeedItems.length; i++) {
-            console.log(countIndeedItems[i])
             count.push(countIndeedItems[i].wordCount)
         }
 
         const params = {
             alias: alias,
             sort: aliasList[aliasIndex].sort,
-            cat: catIndeedItems.length > 0 ? catIndeedItems : '',
-            isserial: bookIndeedStatus.isSerial === undefined ? '' : bookIndeedStatus.isSerial,
+            cat: catIndeedItems.length > 0 ? catIndeedItems.join(',') : '',
+            isSerial: bookIndeedStatus.isSerial === undefined ? '' : bookIndeedStatus.isSerial,
             price: 1,
-            wordCount: count.length > 0 ? count : '',
+            wordCount: count.length > 0 ? count.join(',') : '',
             start: start
         }
+
+        await this.props.dispatchCategoryBookList(params)
+
+        this.setState({
+            showNoMore: true
+        })
+
+        Taro.hideLoading()
     }
 
     clickAlias = () => {
@@ -146,7 +173,14 @@ class CategoryDetail extends Component {
     clickAliasItem = (index) => () => {
         this.setState({
             aliasIndex: index,
-            aliasPaneShow: false
+            aliasPaneShow: false,
+            start: 0
+        }, async () => {
+            await this.props.dispatchClearCategory()
+            this.fetchList()
+            Taro.pageScrollTo({
+                scrollTop: 0
+            })
         })
     }
 
@@ -223,9 +257,14 @@ class CategoryDetail extends Component {
             catIndeedItems: catItems,
             bookIndeedStatus: bookStatus,
             countIndeedItems: countItems,
-            selectionPaneShow: false
-        }, () => {
+            selectionPaneShow: false,
+            start: 0
+        }, async () => {
+            await this.props.dispatchClearCategory()
             this.fetchList()
+            Taro.pageScrollTo({
+                scrollTop: 0
+            })
         })
     }
 
@@ -234,6 +273,20 @@ class CategoryDetail extends Component {
             aliasPaneShow: false,
             selectionPaneShow: false
         })
+    }
+
+    onReachBottom() {
+        const {
+            categoryBookList,
+            categoryBookListTotal
+        } = this.props
+        if (categoryBookListTotal > categoryBookList.length) {
+            this.setState(preState => ({
+                start: preState.start + 1
+            }), () => {
+                this.fetchList()
+            })
+        }
     }
 
     render() {
@@ -246,11 +299,14 @@ class CategoryDetail extends Component {
             selectionPaneShow,
             catItems,
             bookStatus,
-            countItems
+            countItems,
+            showNoMore
         } = this.state
 
         const {
-            cats
+            cats,
+            categoryBookList,
+            categoryBookListTotal
         } = this.props
 
         const catList = cats[gender] ? cats[gender].filter(item => item.major === name)[0].mins : []
@@ -283,69 +339,81 @@ class CategoryDetail extends Component {
                     <View className='line'>
                         <View className='line-item' />
                     </View>
-                    {aliasPaneShow && <View className='alias'>
-                        {aliasList.map((item, index) => {
-                            return <View className={classNames({
-                                'alias-item': true,
-                                'alias-item-active': aliasIndex === index
-                            })} key={String(index)}
-                                onClick={this.clickAliasItem(index)}>
-                                <View className='name'>{item.name}</View>
-                                {aliasIndex === index && <View className='choice' />}
+                    {aliasPaneShow
+                        && <View className='alias'>
+                            {aliasList.map((item, index) => {
+                                return <View className={classNames({
+                                    'alias-item': true,
+                                    'alias-item-active': aliasIndex === index
+                                })} key={String(index)}
+                                    onClick={this.clickAliasItem(index)}>
+                                    <View className='name'>{item.name}</View>
+                                    {aliasIndex === index && <View className='choice' />}
+                                </View>
+                            })}
+                        </View>}
+                    {selectionPaneShow
+                        && <View className='selection'>
+                            <View className='selection-item'>
+                                <View className='title'>子分类</View>
+                                <View className='wrap'>
+                                    {(catList && catList.length > 0)
+                                        && catList.map((item, index) => {
+                                            return <View className={classNames({
+                                                'wrap-item': true,
+                                                'wrap-item-active': catItems.includes(item)
+                                            })} key={String(index)} onClick={this.clickCatItem(item)}>
+                                                {item}
+                                            </View>
+                                        })}
+                                </View>
                             </View>
-                        })}
-                    </View>}
-                    {selectionPaneShow && <View className='selection'>
-                        <View className='selection-item'>
-                            <View className='title'>子分类</View>
-                            <View className='wrap'>
-                                {(catList && catList.length > 0)
-                                    && catList.map((item, index) => {
+                            <View className='selection-item'>
+                                <View className='title'>状态</View>
+                                <View className='wrap'>
+                                    {statusList.map((item, index) => {
                                         return <View className={classNames({
                                             'wrap-item': true,
-                                            'wrap-item-active': catItems.includes(item)
-                                        })} key={String(index)} onClick={this.clickCatItem(item)}>
-                                            {item}
+                                            'wrap-item-active': item === bookStatus
+                                        })} key={String(index)} onClick={this.clickStatusItem(item)}>
+                                            {item.name}
                                         </View>
                                     })}
+                                </View>
                             </View>
-                        </View>
-                        <View className='selection-item'>
-                            <View className='title'>状态</View>
-                            <View className='wrap'>
-                                {statusList.map((item, index) => {
-                                    return <View className={classNames({
-                                        'wrap-item': true,
-                                        'wrap-item-active': item === bookStatus
-                                    })} key={String(index)} onClick={this.clickStatusItem(item)}>
-                                        {item.name}
-                                    </View>
-                                })}
+                            <View className='selection-item'>
+                                <View className='title'>字数</View>
+                                <View className='wrap'>
+                                    {wordCountList.map((item, index) => {
+                                        return <View className={classNames({
+                                            'wrap-item': true,
+                                            'wrap-item-active': countItems.includes(item)
+                                        })} key={String(index)} onClick={this.clickWordCountItem(item)}>
+                                            {item.name}
+                                        </View>
+                                    })}
+                                </View>
                             </View>
-                        </View>
-                        <View className='selection-item'>
-                            <View className='title'>字数</View>
-                            <View className='wrap'>
-                                {wordCountList.map((item, index) => {
-                                    return <View className={classNames({
-                                        'wrap-item': true,
-                                        'wrap-item-active': countItems.includes(item)
-                                    })} key={String(index)} onClick={this.clickWordCountItem(item)}>
-                                        {item.name}
-                                    </View>
-                                })}
-                            </View>
-                        </View>
-                        <View className='confirm' onClick={this.clickConfirm}>确认</View>
-                    </View>}
+                            <View className='confirm' onClick={this.clickConfirm}>确认</View>
+                        </View>}
                 </View>
                 {(aliasPaneShow || selectionPaneShow)
                     && <View className='mask' onClick={this.clickMask} />}
             </View>
             <View className='list'>
+                {categoryBookList.map((item, index) => {
+                    return <NovelItem key={item._id} novel={item} />
+                })}
+                {(showNoMore && (categoryBookListTotal === categoryBookList.length || categoryBookList.length < 20))
+                    && <NoMore />}
             </View>
         </View>
     }
+}
+
+CategoryDetail.defaultProps = {
+    categoryBookList: [],
+    categoryBookListTotal: 0
 }
 
 export default CategoryDetail

@@ -18,7 +18,8 @@ class App extends Component {
       'pages/mall/mall',
       'pages/category/category',
       'pages/user/user',
-      'pages/category-detail/category-detail'
+      'pages/category-detail/category-detail',
+      'pages/book-detail/book-detail'
     ],
     window: {
       backgroundTextStyle: 'light',
