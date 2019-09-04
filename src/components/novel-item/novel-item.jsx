@@ -21,7 +21,7 @@ function NovelItem({ novel }) {
                 <View className='bottom'>
                     <View className='author'>{novel.author}</View>
                     <View className='info'>
-                        <View className='minorCate'>{novel.minorCate}</View>
+                        <View className='cate'>{novel.minorCate}</View>
                         <View className='latelyFollower'>{novel.latelyFollower}人气</View>
                     </View>
                 </View>

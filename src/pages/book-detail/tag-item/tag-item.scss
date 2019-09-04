@@ -1,0 +1,11 @@
+@import "@/styles/scheme.scss";
+
+.tag {
+  font-size: 26rpx;
+  color: $DarkGray;
+  border: 1px solid $Gray;
+  border-radius: 50rpx;
+  padding: 6rpx 20rpx;
+  margin-right: 15rpx;
+  margin-bottom: 20rpx;
+}

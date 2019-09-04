@@ -1,15 +1,149 @@
 @import "@/styles/scheme.scss";
+@import "~taro-ui/dist/style/components/rate.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 
 .detail {
+  padding: 30rpx;
+
+  // 顶部消息
   .header {
+    .info {
+      display: flex;
+      align-items: center;
+
+      .cover {
+        width: 175rpx;
+        height: 245rpx;
+        box-shadow: 0 0 15px 0 $ShadowBlack;
+        margin-right: 25rpx;
+        flex-shrink: 0;
+      }
+
+      .desc {
+        flex-grow: 1;
+
+        .title {
+          font-size: 34rpx;
+          color: $Black;
+        }
+
+        .sku {
+          font-size: 24rpx;
+          display: flex;
+          align-items: center;
+          margin-top: 25rpx;
+
+          .author {
+            color: $Red;
+          }
+
+          .cate,
+          .score,
+          .tip,
+          .update {
+            color: $DarkGray;
+            margin-right: 25rpx;
+          }
+
+          .word-count {
+            color: $DarkGray;
+          }
+        }
+      }
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      margin-top: 35rpx;
+
+      .sku {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 24rpx;
+
+        .key {
+          color: $DarkGray;
+        }
+
+        .val {
+          color: $Black;
+          margin-top: 15rpx;
+        }
+      }
+    }
   }
 
-  .comment {
+  // 简介
+  .intro {
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    transition: all 0.4s ease;
+    color: $DarkGray;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    margin: 35rpx 0;
   }
 
-  .recommend {
+  // 目录
+  .catalog {
   }
 
+  // 标签
+  .tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 35rpx 0;
+  }
+
+  // 评论
+  .comments {
+  }
+
+  // 推荐
+  .recommends {
+  }
+
+  // 造作栏
   .action-bar {
   }
+
+  .section {
+    display: flex;
+    align-items: center;
+
+    .line {
+      width: 5rpx;
+      height: 30rpx;
+      background: $Claret;
+    }
+
+    .title {
+      margin-left: 5rpx;
+      font-size: 30rpx;
+      color: $Black;
+    }
+  }
+}
+
+.line {
+  margin: 0 15rpx;
+  width: 1rpx;
+  height: 24rpx;
+  background-color: $DarkGray;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: $LineGray;
+  margin: 35rpx 0;
 }
