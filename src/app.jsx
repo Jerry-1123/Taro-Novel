@@ -19,7 +19,12 @@ class App extends Component {
       'pages/category/category',
       'pages/user/user',
       'pages/category-detail/category-detail',
-      'pages/book-detail/book-detail'
+      'pages/book-detail/book-detail',
+      'pages/book-chapter/book-chapter',
+      'pages/book-author/book-author',
+      'pages/book-recommend/book-recommend',
+      'pages/book-tag/book-tag',
+      'pages/book-comment/book-comment'
     ],
     window: {
       backgroundTextStyle: 'light',

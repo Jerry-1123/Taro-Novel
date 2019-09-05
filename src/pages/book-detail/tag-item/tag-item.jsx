@@ -3,10 +3,17 @@ import { View } from '@tarojs/components'
 
 import './tag-item.scss'
 
-function TagItem({tag}) {
+function TagItem({ tag }) {
+
+
+    const handleGoTag = () => {
+        Taro.navigateTo({
+            url: '/pages/book-tag/book-tag'
+        })
+    }
 
     return (
-        <View className='tag'>{tag}</View>
+        <View className='tag' hoverClass='hover' onClick={handleGoTag}>{tag}</View>
     )
 }
 

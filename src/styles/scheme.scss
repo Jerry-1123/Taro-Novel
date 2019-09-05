@@ -9,6 +9,8 @@ $LineGray: #f2f2f2;
 $Red: #db544c;
 $LightRed: #fdecec;
 $Claret: #b93321;
+$Female: #ef8498;
+$Male: #5392f6;
 
 $ShadowBlack: #cccccc;
 
@@ -17,11 +19,11 @@ $DialogBlack: rgba(0, 0, 0, 0.5);
 /*字体库*/
 @font-face {
   font-family: "novel"; /* project id 1341091 */
-  src: url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.eot");
-  src: url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.eot?#iefix")
+  src: url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.eot");
+  src: url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.eot?#iefix")
       format("embedded-opentype"),
-    url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.woff2") format("woff2"),
-    url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.woff") format("woff"),
-    url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.ttf") format("truetype"),
-    url("//at.alicdn.com/t/font_1341091_ulj6z0ep06b.svg#novel") format("svg");
+    url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.woff") format("woff"),
+    url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_1341091_3lp3tncbyl7.svg#novel") format("svg");
 }

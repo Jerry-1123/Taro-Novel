@@ -94,6 +94,30 @@
 
   // 目录
   .catalog {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 35rpx 0;
+    font-size: 28rpx;
+
+    .update {
+      color: $Red;
+    }
+
+    .chapter {
+      color: $DarkGray;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 60%;
+      font-family: "novel";
+      font-style: normal;
+
+      &::after {
+        content: "\e622";
+        margin-left: 10rpx;
+      }
+    }
   }
 
   // 标签
@@ -106,6 +130,11 @@
 
   // 评论
   .comments {
+    margin: 35rpx 0;
+
+    .more-comment{
+      
+    }
   }
 
   // 推荐
@@ -146,4 +175,8 @@
   height: 1px;
   background-color: $LineGray;
   margin: 35rpx 0;
+}
+
+.hover {
+  opacity: 0.8;
 }

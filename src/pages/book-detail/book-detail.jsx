@@ -1,4 +1,4 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { useState, useEffect, useRouter } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import API from '@/service/api'
 import Config from '@/config/config'
@@ -9,68 +9,70 @@ import classNames from 'classnames'
 import './book-detail.scss'
 
 import { AtRate } from 'taro-ui'
-
 import Loading from '@/components/loading/loading'
 import Modal from '@/components/modal/modal'
-
 import TagItem from './tag-item/tag-item'
+import CommentItem from './comment-item/comment-item'
 
-class BookDetail extends Component {
+function BookDetail() {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoading: true,
-            bookDetail: {
-                cover: '',
-                rating: {
-                    count: 0,
-                    isEffect: true,
-                    score: 0,
-                    tip: ""
-                },
-                tags: []
-            },
-            showMoreDetail: false
-        }
+    const router = useRouter()
+
+    const [isLoading, setLoading] = useState(true)
+    const [showDetail, setShowDetail] = useState(false)
+    const [bookDetail, setBookDetail] = useState(null)
+    const [bookComments, setBookComments] = useState([])
+    const [bookCommentsTotal, setBookCommentsTotal] = useState(0)
+
+    useEffect(async () => {
+        const id = router.params.id
+        const res1 = await API.Book.getDetail(id)
+        setBookDetail(res1)
+        setLoading(false)
+        Taro.setNavigationBarTitle({
+            title: res1.title
+        })
+        const res2 = await API.Book.getCommentReview(id)
+        setBookComments(res2.reviews)
+        setBookCommentsTotal(res2.total)
+    }, [])
+
+    const handleShowDetail = () => {
+        setShowDetail(true)
     }
 
-    async componentDidMount() {
-        const { params } = this.$router
-        const res = await API.Book.getDetail(params.id)
-        this.setState({
-            bookDetail: res,
-            isLoading: false
-        }, () => {
-            Taro.setNavigationBarTitle({
-                title: res.title
-            })
+    const handleCloseDetail = () => {
+        setShowDetail(false)
+    }
+
+    const handleGoAuthor = () => {
+        Taro.navigateTo({
+            url: '/pages/book-author/book-author'
         })
     }
 
-    handleShowMoreDetail = () => {
-        this.setState({
-            showMoreDetail: true
+    const handleGoChapter = () => {
+        Taro.navigateTo({
+            url: '/pages/book-chapter/book-chapter'
         })
     }
 
-    handleCloseMoreDetail = () => {
-        this.setState({
-            showMoreDetail: false
+    const handleGoComment = () => {
+        Taro.navigateTo({
+            url: '/pages/book-comment/book-comment'
         })
     }
 
-    render() {
+    const handleGoRecommend = () => {
+        Taro.navigateTo({
+            url: '/pages/book-recommend/book-recommend'
+        })
+    }
 
-        const {
-            bookDetail,
-            isLoading,
-            showMoreDetail
-        } = this.state
-
-        return (
-            <View className='detail'>
-                <Loading loading={isLoading} />
+    return (
+        <View className='detail'>
+            <Loading loading={isLoading} />
+            {bookDetail !== null && <View>
                 {/* 顶部信息 */}
                 <View className='header'>
                     <View className='info'>
@@ -78,7 +80,7 @@ class BookDetail extends Component {
                         <View className='desc'>
                             <View className='title'>{bookDetail.title}</View>
                             <View className='sku'>
-                                <View className='author'>{bookDetail.author}</View>
+                                <View className='author' hoverClass='hover' onClick={handleGoAuthor}>{bookDetail.author}</View>
                                 <View className='line' />
                                 <View className='cate'>{bookDetail.minorCate}</View>
                             </View>
@@ -119,11 +121,16 @@ class BookDetail extends Component {
                     <View className='line' />
                     <View className='title'>简介</View>
                 </View>
-                <View className='intro' onClick={this.handleShowMoreDetail}>{bookDetail.longIntro}</View>
+                <View className='intro' hoverClass='hover' onClick={handleShowDetail}>{bookDetail.longIntro}</View>
                 <View className='divider' />
                 {/* 目录 */}
-                <View className='catalog'>
-
+                <View className='section'>
+                    <View className='line' />
+                    <View className='title'>目录</View>
+                </View>
+                <View className='catalog' hoverClass='hover' onClick={handleGoChapter}>
+                    <View className='update'>{format(bookDetail.updated, 'zh_CN')}更新</View>
+                    <View className='chapter'>{bookDetail.lastChapter}</View>
                 </View>
                 <View className='divider' />
                 {/* 标签 */}
@@ -137,19 +144,33 @@ class BookDetail extends Component {
                     })}
                 </View>
                 <View className='divider' />
-                <View className='comments'>
+                {/* 书评 */}
+                <View className='section'>
+                    <View className='line' />
+                    <View className='title'>书评</View>
                 </View>
-                <View className='recommends'>
+                <View className='comments' hoverClass='hover' onClick={handleGoComment}>
+                    {bookCommentsTotal > 0 && bookComments.map((item, index) => {
+                        return <CommentItem comment={item} key={String(index)} />
+                    })}
+                    {bookCommentsTotal === 0 && <View className='more-comment'>
+
+                    </View>}
                 </View>
+                <View className='divider' />
+                {/* 推荐 */}
+                <View className='recommends' hoverClass='hover' onClick={handleGoRecommend}>
+                </View>
+                {/* 操作栏 */}
                 <View className='action-bar'>
                 </View>
                 <Modal title='简介'
                     content={bookDetail.longIntro}
-                    visible={showMoreDetail}
-                    onClose={this.handleCloseMoreDetail} />
-            </View>
-        )
-    }
+                    visible={showDetail}
+                    onClose={handleCloseDetail} />
+            </View>}
+        </View>
+    )
 }
 
 export default BookDetail

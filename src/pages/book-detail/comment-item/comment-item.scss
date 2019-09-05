@@ -1,0 +1,70 @@
+@import "@/styles/scheme.scss";
+@import "~taro-ui/dist/style/components/rate.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.comment {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .author {
+      display: flex;
+      align-items: center;
+
+      .avatar {
+        width: 44rpx;
+        height: 44rpx;
+        border-radius: 100%;
+      }
+
+      .nickname {
+      }
+
+      .level {
+      }
+
+      .male {
+        font-family: "novel";
+        font-style: normal;
+        font-style: 30rpx;
+        color: $Male;
+
+        &::after {
+          content: "\e877";
+        }
+      }
+
+      .female {
+        font-family: "novel";
+        font-style: normal;
+        font-style: 30rpx;
+        color: $Female;
+
+        &::after {
+          content: "\e878";
+        }
+      }
+    }
+
+    .evaluate {
+    }
+  }
+
+  .body {
+    .title {
+    }
+
+    .content {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  .footer {
+  }
+}

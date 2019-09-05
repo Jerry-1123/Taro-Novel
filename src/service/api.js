@@ -17,8 +17,11 @@ const API = {
         }
     },
     Book: {
-        getDetail: (id) => {
+        getDetail: id => {
             return Request.get(`${API_URL2}/book/${id}`)
+        },
+        getCommentReview: id => {
+            return Request.get(`${API_URL2}/post/review/best-by-book?book=${id}`)
         }
     }
 }
