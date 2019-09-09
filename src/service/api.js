@@ -22,6 +22,9 @@ const API = {
         },
         getCommentReview: id => {
             return Request.get(`${API_URL2}/post/review/best-by-book?book=${id}`)
+        },
+        getRecommendList: id => {
+            return Request.get(`${API_URL2}/book/${id}/recommend`)
         }
     }
 }

@@ -3,10 +3,13 @@
 @import "~taro-ui/dist/style/components/icon.scss";
 
 .comment {
+  margin-bottom: 50rpx;
+
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20rpx;
 
     .author {
       display: flex;
@@ -16,18 +19,28 @@
         width: 44rpx;
         height: 44rpx;
         border-radius: 100%;
+        margin-right: 15rpx;
       }
 
       .nickname {
+        font-size: 24rpx;
+        color: $DarkGray;
+        margin-right: 10rpx;
       }
 
       .level {
+        font-size: 20rpx;
+        color: $DarkGray;
+        border: 1px solid $Gray;
+        border-radius: 20rpx;
+        padding: 0 10rpx;
+        margin-right: 10rpx;
       }
 
       .male {
         font-family: "novel";
         font-style: normal;
-        font-style: 30rpx;
+        font-size: 24rpx;
         color: $Male;
 
         &::after {
@@ -38,7 +51,7 @@
       .female {
         font-family: "novel";
         font-style: normal;
-        font-style: 30rpx;
+        font-size: 24rpx;
         color: $Female;
 
         &::after {
@@ -52,10 +65,20 @@
   }
 
   .body {
+    margin-bottom: 20rpx;
+
     .title {
+      font-size: 28rpx;
+      margin-bottom: 20rpx;
+      color: $Black;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .content {
+      font-size: 26rpx;
+      color: $DarkGray;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -66,5 +89,43 @@
   }
 
   .footer {
+    color: $DarkGray;
+    font-size: 24rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .time {
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+
+      &-comment {
+        font-family: "novel";
+        font-style: normal;
+        margin-right: 20rpx;
+
+        &::before {
+          content: "\e691";
+          margin-right: 10rpx;
+        }
+      }
+
+      &-like {
+        font-family: "novel";
+        font-style: normal;
+
+        &::before {
+          content: "\e60c";
+          margin-right: 10rpx;
+        }
+      }
+    }
   }
+}
+
+.hover {
+  opacity: 0.8;
 }

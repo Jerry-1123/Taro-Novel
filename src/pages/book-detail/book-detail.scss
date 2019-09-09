@@ -132,13 +132,17 @@
   .comments {
     margin: 35rpx 0;
 
-    .more-comment{
-      
+    .more-comments {
+      text-align: center;
+      font-size: 28rpx;
+      color: $Red;
     }
   }
 
   // 推荐
   .recommends {
+    margin: 35rpx 0;
+    display: flex;
   }
 
   // 造作栏
@@ -148,6 +152,7 @@
   .section {
     display: flex;
     align-items: center;
+    position: relative;
 
     .line {
       width: 5rpx;
@@ -159,6 +164,20 @@
       margin-left: 5rpx;
       font-size: 30rpx;
       color: $Black;
+    }
+
+    .more-recommend {
+      color: $DarkGray;
+      font-family: "novel";
+      font-style: normal;
+      position: absolute;
+      right: 20rpx;
+      font-size: 28rpx;
+
+      &::after {
+        content: "\e622";
+        margin-left: 10rpx;
+      }
     }
   }
 }

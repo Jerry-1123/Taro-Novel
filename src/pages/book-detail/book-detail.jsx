@@ -1,10 +1,9 @@
 import Taro, { useState, useEffect, useRouter } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import API from '@/service/api'
 import Config from '@/config/config'
 import Util from '@/utils/util'
 import { format } from 'timeago.js'
-import classNames from 'classnames'
 
 import './book-detail.scss'
 
@@ -13,28 +12,37 @@ import Loading from '@/components/loading/loading'
 import Modal from '@/components/modal/modal'
 import TagItem from './tag-item/tag-item'
 import CommentItem from './comment-item/comment-item'
+import RecommendItem from './recommend-item/recommend-item'
 
 function BookDetail() {
 
     const router = useRouter()
 
+    const [bookId, setBookId] = useState(0)
     const [isLoading, setLoading] = useState(true)
     const [showDetail, setShowDetail] = useState(false)
     const [bookDetail, setBookDetail] = useState(null)
     const [bookComments, setBookComments] = useState([])
     const [bookCommentsTotal, setBookCommentsTotal] = useState(0)
+    const [bookRecommends, setBookRecommends] = useState([])
 
     useEffect(async () => {
         const id = router.params.id
+        setBookId(id)
+        // 获取基本详情
         const res1 = await API.Book.getDetail(id)
         setBookDetail(res1)
         setLoading(false)
         Taro.setNavigationBarTitle({
             title: res1.title
         })
+        // 获取书评
         const res2 = await API.Book.getCommentReview(id)
         setBookComments(res2.reviews)
         setBookCommentsTotal(res2.total)
+        // 获取推荐列表
+        const res3 = await API.Book.getRecommendList(id)
+        setBookRecommends(res3.books)
     }, [])
 
     const handleShowDetail = () => {
@@ -65,7 +73,7 @@ function BookDetail() {
 
     const handleGoRecommend = () => {
         Taro.navigateTo({
-            url: '/pages/book-recommend/book-recommend'
+            url: `/pages/book-recommend/book-recommend?id=${bookId}`
         })
     }
 
@@ -134,33 +142,48 @@ function BookDetail() {
                 </View>
                 <View className='divider' />
                 {/* 标签 */}
-                <View className='section'>
-                    <View className='line' />
-                    <View className='title'>标签</View>
-                </View>
-                <View className='tags'>
-                    {bookDetail.tags.map((item, index) => {
-                        return <TagItem tag={item} key={String(index)} />
-                    })}
-                </View>
-                <View className='divider' />
+                {bookDetail.tags.length > 0 && <View>
+                    <View className='section'>
+                        <View className='line' />
+                        <View className='title'>标签</View>
+                    </View>
+                    <View className='tags'>
+                        {bookDetail.tags.map((item, index) => {
+                            return <TagItem tag={item} key={String(index)} />
+                        })}
+                    </View>
+                    <View className='divider' />
+                </View>}
                 {/* 书评 */}
-                <View className='section'>
-                    <View className='line' />
-                    <View className='title'>书评</View>
-                </View>
-                <View className='comments' hoverClass='hover' onClick={handleGoComment}>
-                    {bookCommentsTotal > 0 && bookComments.map((item, index) => {
-                        return <CommentItem comment={item} key={String(index)} />
-                    })}
-                    {bookCommentsTotal === 0 && <View className='more-comment'>
-
-                    </View>}
-                </View>
-                <View className='divider' />
+                {bookComments.length > 0 && <View>
+                    <View className='section'>
+                        <View className='line' />
+                        <View className='title'>书评</View>
+                    </View>
+                    <View className='comments'>
+                        {bookComments.map((item, index) => {
+                            return <CommentItem comment={item} key={String(index)} />
+                        })}
+                        <View className='more-comments' hoverClass='hover' onClick={handleGoComment}>
+                            全部书评{bookCommentsTotal}条
+                    </View>
+                    </View>
+                    <View className='divider' />
+                </View>}
                 {/* 推荐 */}
-                <View className='recommends' hoverClass='hover' onClick={handleGoRecommend}>
-                </View>
+                {bookRecommends.length > 0 && <View>
+                    <View className='section'>
+                        <View className='line' />
+                        <View className='title'>猜你喜欢</View>
+                        <View className='more-recommend' hoverClass='hover' onClick={handleGoRecommend}>更多</View>
+                    </View>
+                    <View className='recommends'>
+                        {bookRecommends.slice(0, 4).map((item, index) => {
+                            return <RecommendItem recommend={item} key={String(index)} />
+                        })}
+                    </View>
+                    <View className='divider' />
+                </View>}
                 {/* 操作栏 */}
                 <View className='action-bar'>
                 </View>
