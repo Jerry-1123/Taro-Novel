@@ -8,13 +8,13 @@ function RecommendItem({ recommend }) {
 
     const handleGoDetail = () => {
         Taro.navigateTo({
-            url: '/pages/book-detail/book-detail'
+            url: `/pages/book-detail/book-detail?id=${recommend._id}`
         })
     }
 
     return (
         <View className='recommend' hoverClass='hover' onClick={handleGoDetail}>
-            <Image className='cover' src={Config.staticUrl + recommend.cover} mode='widthFix' />
+            <Image className='cover' src={Config.staticUrl + recommend.cover} />
             <View className='title'>{recommend.title}</View>
             <View className='ratio'>{recommend.otherReadRatio}%读过</View>
         </View>

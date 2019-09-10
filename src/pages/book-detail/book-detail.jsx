@@ -142,7 +142,7 @@ function BookDetail() {
                 </View>
                 <View className='divider' />
                 {/* 标签 */}
-                {bookDetail.tags.length > 0 && <View>
+                {(bookDetail !== null && bookDetail.tags.length > 0) && <View>
                     <View className='section'>
                         <View className='line' />
                         <View className='title'>标签</View>
