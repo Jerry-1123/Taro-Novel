@@ -63,14 +63,14 @@ function BookDetail() {
     // 跳转章节
     const handleGoChapter = () => {
         Taro.navigateTo({
-            url: '/pages/book-chapter/book-chapter'
+            url: `/pages/book-chapter/book-chapter?id=${bookDetail._id}&title=${bookDetail.title}`
         })
     }
 
     // 跳转评论
     const handleGoComment = () => {
         Taro.navigateTo({
-            url: '/pages/book-comment/book-comment'
+            url: `/pages/book-comment/book-comment?id=${bookDetail._id}&title=${bookDetail.title}&author=${bookDetail.author}&cover=${bookDetail.cover}&popularity=${bookDetail.latelyFollower}`
         })
     }
 

@@ -8,7 +8,7 @@ function TagItem({ tag }) {
 
     const handleGoTag = () => {
         Taro.navigateTo({
-            url: '/pages/book-tag/book-tag'
+            url: `/pages/book-tag/book-tag?tag=${tag}`
         })
     }
 

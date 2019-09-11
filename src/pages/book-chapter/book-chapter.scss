@@ -1,1 +1,24 @@
 @import "@/styles/scheme.scss";
+
+.chapter {
+  .list {
+    &-item {
+      height: 80rpx;
+      line-height: 80rpx;
+      padding: 0 30rpx;
+      font-size: 26rpx;
+      color: $Black;
+
+      .index {
+        margin-right: 20rpx;
+      }
+
+      .title {
+      }
+    }
+  }
+}
+
+.hover {
+  background-color: $LightGray;
+}

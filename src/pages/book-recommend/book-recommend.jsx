@@ -13,24 +13,25 @@ function BookRecommend() {
     const router = useRouter()
 
     const [isLoading, setLoading] = useState(true)
-    const [bookRecommends, setBookRecommends] = useState([])
+    const [bookList, setBookList] = useState([])
 
     useEffect(async () => {
         const id = router.params.id
         const res = await API.Book.getRecommendList(id)
-        setBookRecommends(res.books)
+        setBookList(res.books)
         setLoading(false)
     }, [])
 
     return (
         <View className='recommend'>
             <Loading loading={isLoading} />
-            {bookRecommends.length > 0 && <View className='list'>
-                {bookRecommends.map((item, index) => {
+            {bookList.length > 0 && <View className='list'>
+                {bookList.map((item, index) => {
                     return <NovelItem key={item._id} novel={item} />
                 })}
                 <NoMore />
             </View>}
+            {bookList.length === 0 && <NoMore />}
         </View>
     )
 }

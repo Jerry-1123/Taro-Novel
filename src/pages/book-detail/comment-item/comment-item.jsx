@@ -44,7 +44,7 @@ function CommentItem({ comment = { author: {} } }) {
                     <Text className='action-like'>{comment.likeCount}</Text>
                 </View>
             </View>
-            <Modal title={comment.author.nickname+' 说：'}
+            <Modal title={comment.author.nickname + ' 说：'}
                 content={comment.content}
                 visible={showComment}
                 onClose={handleCloseModal} />

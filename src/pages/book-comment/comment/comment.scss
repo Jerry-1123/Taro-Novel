@@ -1,0 +1,110 @@
+@import "@/styles/scheme.scss";
+// @import "~taro-ui/dist/style/components/rate.scss";
+// @import "~taro-ui/dist/style/components/icon.scss";
+
+.comment {
+  padding: 25rpx 0 35rpx;
+  border-bottom: 1px solid $LineGray;
+
+  .title {
+    font-size: 30rpx;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: $Black;
+  }
+
+  .content {
+    font-size: 24rpx;
+    color: $DarkGray;
+    margin-top: 16rpx;
+    margin-bottom: 30rpx;
+    line-height: 40rpx;
+  }
+
+  .desc {
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      width: 50rpx;
+      height: 50rpx;
+      border-radius: 100%;
+      margin-right: 20rpx;
+    }
+
+    .sku {
+      display: flex;
+      flex-direction: column;
+
+      &-item {
+        display: flex;
+        align-items: center;
+
+        .nickname {
+          font-size: 22rpx;
+          color: $DarkGray;
+          margin-right: 10rpx;
+        }
+
+        .level {
+          font-size: 14rpx;
+          color: $DarkGray;
+          border: 1px solid $Gray;
+          border-radius: 20rpx;
+          padding: 2rpx 10rpx;
+          margin-right: 10rpx;
+        }
+
+        .time {
+          font-size: 20rpx;
+          color: $Gray;
+        }
+
+        .helpful {
+          font-size: 20rpx;
+          color: $DarkGray;
+        }
+
+        .male {
+          font-family: "novel";
+          font-style: normal;
+          font-size: 20rpx;
+          color: $Male;
+
+          &::after {
+            content: "\e877";
+          }
+        }
+
+        .female {
+          font-family: "novel";
+          font-style: normal;
+          font-size: 20rpx;
+          color: $Female;
+
+          &::after {
+            content: "\e878";
+          }
+        }
+
+        .evaluate {
+          width: 100rpx;
+        }
+
+        &:nth-child(2){
+          margin-top: 10rpx;
+        }
+      }
+
+      &:nth-child(3) {
+        align-items: flex-end;
+      }
+    }
+
+    .all {
+      flex-grow: 1;
+    }
+  }
+}

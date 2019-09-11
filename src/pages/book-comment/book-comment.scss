@@ -1,1 +1,82 @@
 @import "@/styles/scheme.scss";
+@import "~taro-ui/dist/style/components/rate.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.comment {
+  padding: 35rpx;
+
+  .header {
+    display: flex;
+
+    .cover {
+      width: 127rpx;
+      height: 175rpx;
+      box-shadow: 0 0 10px 0 $ShadowBlack;
+      flex-shrink: 0;
+      margin-right: 25rpx;
+    }
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+
+      .title {
+        font-size: 30rpx;
+        font-weight: bold;
+        color: $Black;
+      }
+
+      .author,
+      .popularity {
+        font-size: 22rpx;
+        color: $DarkGray;
+        margin-top: 25rpx;
+      }
+    }
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100rpx;
+    line-height: 100rpx;
+
+    .total {
+      font-family: "novel";
+      font-style: normal;
+      color: $DarkGray;
+      font-size: 22rpx;
+
+      &::before {
+        content: "\e691";
+        margin-right: 10rpx;
+      }
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+
+      &-item {
+        height: 24rpx;
+        line-height: 24rpx;
+        font-size: 24rpx;
+        color: $DarkGray;
+        padding: 0 15rpx;
+
+        &:nth-child(n+2) {
+          border-left: 1px solid $LineGray;
+        }
+
+        &-selected{
+          color: $Red;
+        }
+      }
+    }
+  }
+
+  .list {
+  }
+}

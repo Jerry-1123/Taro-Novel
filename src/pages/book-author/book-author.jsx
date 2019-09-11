@@ -31,6 +31,7 @@ function BookAuthor() {
                 })}
                 <NoMore />
             </View>}
+            {bookList.length === 0 && <NoMore />}
         </View>
     )
 }

@@ -17,17 +17,29 @@ const API = {
         }
     },
     Book: {
-        getDetail: id => {
-            return Request.get(`${API_URL2}/book/${id}`)
+        getDetail: bookId => {
+            return Request.get(`${API_URL2}/book/${bookId}`)
         },
-        getCommentReview: id => {
-            return Request.get(`${API_URL2}/post/review/best-by-book?book=${id}`)
+        getCommentReview: bookId => {
+            return Request.get(`${API_URL2}/post/review/best-by-book?book=${bookId}`)
         },
-        getRecommendList: id => {
-            return Request.get(`${API_URL2}/book/${id}/recommend`)
+        getRecommendList: bookId => {
+            return Request.get(`${API_URL2}/book/${bookId}/recommend`)
         },
         getAuthorBookList: author => {
             return Request.get(`${API_URL1}/books/accurate-search-author?author=${author}&packageName=com.ifmoc.ZhuiShuShenQi`)
+        },
+        getTagBookList: tag => {
+            return Request.get(`${API_URL1}/books/fuzzy-search?model.query=${tag}&model.start=0&model.limit=50`)
+        },
+        getSummaryId: bookId => {
+            return Request.get(`${API_URL2}/btoc?view=summary&book=${bookId}`)
+        },
+        getChapter: summaryId => {
+            return Request.get(`${API_URL2}/btoc/${summaryId}?view=chapters`)
+        },
+        getComments: params => {
+            return Request.get(`${API_URL2}/post/review/by-book`, params)
         }
     }
 }
