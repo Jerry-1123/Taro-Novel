@@ -25,6 +25,9 @@ const API = {
         },
         getRecommendList: id => {
             return Request.get(`${API_URL2}/book/${id}/recommend`)
+        },
+        getAuthorBookList: author => {
+            return Request.get(`${API_URL1}/books/accurate-search-author?author=${author}&packageName=com.ifmoc.ZhuiShuShenQi`)
         }
     }
 }

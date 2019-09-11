@@ -53,24 +53,28 @@ function BookDetail() {
         setShowDetail(false)
     }
 
+    // 跳转作者详情
     const handleGoAuthor = () => {
         Taro.navigateTo({
-            url: '/pages/book-author/book-author'
+            url: `/pages/book-author/book-author?author=${bookDetail.author}`
         })
     }
 
+    // 跳转章节
     const handleGoChapter = () => {
         Taro.navigateTo({
             url: '/pages/book-chapter/book-chapter'
         })
     }
 
+    // 跳转评论
     const handleGoComment = () => {
         Taro.navigateTo({
             url: '/pages/book-comment/book-comment'
         })
     }
 
+    // 跳转推荐列表
     const handleGoRecommend = () => {
         Taro.navigateTo({
             url: `/pages/book-recommend/book-recommend?id=${bookId}`
