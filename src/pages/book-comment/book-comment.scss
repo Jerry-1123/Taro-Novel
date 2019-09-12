@@ -42,6 +42,7 @@
     justify-content: space-between;
     height: 100rpx;
     line-height: 100rpx;
+    position: relative;
 
     .total {
       font-family: "novel";
@@ -66,15 +67,27 @@
         color: $DarkGray;
         padding: 0 15rpx;
 
-        &:nth-child(n+2) {
+        &:nth-child(n + 2) {
           border-left: 1px solid $LineGray;
         }
 
-        &-selected{
+        &-selected {
           color: $Red;
         }
       }
     }
+  }
+
+  .fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 35rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    z-index: 999;
+    background: $White;
   }
 
   .list {

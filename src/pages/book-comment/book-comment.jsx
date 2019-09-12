@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRouter, useReachBottom } from '@tarojs/taro'
+import Taro, { useState, useEffect, useRouter, useReachBottom, usePageScroll } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import API from '@/service/api'
 import Config from '@/config/config'
@@ -39,6 +39,8 @@ function BookComment() {
     const [totalComments, setTotalComments] = useState(0)   // 总书评
     const [pageIndex, setPageIndex] = useState(0)           // 页面下标
     const [sortIndex, setSortIndex] = useState(0)           // 排序状态
+    const [fixBar, setFixBar] = useState(false)             // 操作栏悬浮状态
+    const [scrollTopHeight, setScrollTopHeight] = useState(0)
 
     useEffect(async () => {
         const {
@@ -53,6 +55,12 @@ function BookComment() {
         setAuthor(author)
         setCover(cover)
         setPopularity(popularity)
+
+        const query = Taro.createSelectorQuery(this)
+        query.select('#bar').boundingClientRect(res => {
+            setScrollTopHeight(res.top)
+        })
+        query.exec()
     }, [])
 
     useEffect(() => {
@@ -60,9 +68,16 @@ function BookComment() {
         getList()
     }, [pageIndex, bookId, sortIndex])
 
+    usePageScroll(res => {
+        if (res.scrollTop >= scrollTopHeight) {
+            setFixBar(true)
+        }else{
+            setFixBar(false)
+        }
+    })
+
     useReachBottom(() => {
         if (comments.length !== totalComments) {
-            console.log(111)
             setPageIndex(pageIndex + 1)
         }
     })
@@ -104,7 +119,20 @@ function BookComment() {
                     <View className='popularity'>讨论区人气：{Util.getFollower(popularity)}</View>
                 </View>
             </View>
-            <View className='bar'>
+            {fixBar && <View className='bar fixed'>
+                <View className='total'>{totalComments}条书评</View>
+                <View className='action'>
+                    {sortTypeList.map((item, index) => {
+                        return <View className={classNames({
+                            'action-item': true,
+                            'action-item-selected': sortIndex === index
+                        })} key={String(index)} onClick={handleClickSortType(index)}>
+                            {item.name}
+                        </View>
+                    })}
+                </View>
+            </View>}
+            <View id='bar' className='bar'>
                 <View className='total'>{totalComments}条书评</View>
                 <View className='action'>
                     {sortTypeList.map((item, index) => {
