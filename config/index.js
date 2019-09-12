@@ -59,6 +59,7 @@ const config = {
   },
   copy: {
     patterns: [
+      { from: 'src/components/parser/Parser/', to: 'dist/components/parser/Parser/' }
     ],
     options: {
     }

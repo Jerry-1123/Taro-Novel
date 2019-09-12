@@ -39,6 +39,12 @@ function BookChapter() {
         }
     }, [])
 
+    const handleGoReader = (item) => () => {
+        Taro.navigateTo({
+            url: `/pages/reader/reader?link=${item.link}`
+        })
+    }
+
     useReachBottom(() => {
         if (list.length !== chapterList.length) {
             setList(list.concat(chapterList.slice((index + 1) * 100, (index + 2) * 100)))
@@ -51,7 +57,8 @@ function BookChapter() {
             <Loading loading={isLoading} />
             <View className='list'>
                 {list.map((item, index) => {
-                    return <View className='list-item' key={String(index)} hoverClass='hover'>
+                    return <View className='list-item' key={String(index)} hoverClass='hover'
+                        onClick={handleGoReader(item)}>
                         <Text className='index'>{index + 1}.</Text>
                         <Text className='title'>{item.title}</Text>
                     </View>

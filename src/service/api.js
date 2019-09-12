@@ -3,6 +3,7 @@ import Request from './request'
 
 const API_URL1 = Config.apiUrl1
 const API_URL2 = Config.apiUrl2
+const Chapter_Url = Config.chapterUrl
 
 const API = {
     Category: {
@@ -40,6 +41,9 @@ const API = {
         },
         getComments: params => {
             return Request.get(`${API_URL2}/post/review/by-book`, params)
+        },
+        getReaderContent: link => {
+            return Request.get(`${Chapter_Url}/chapter/${link}`)
         }
     }
 }

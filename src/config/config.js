@@ -11,7 +11,7 @@ const Config = {
     /**
      * 章节域名
      */
-    chapterUrl: 'https://statics.zhuishushenqi.com'
+    chapterUrl: 'https://chapter.zhuishushenqi.com'
 }
 
 export default Config

@@ -24,7 +24,8 @@ class App extends Component {
       'pages/book-author/book-author',
       'pages/book-recommend/book-recommend',
       'pages/book-tag/book-tag',
-      'pages/book-comment/book-comment'
+      'pages/book-comment/book-comment',
+      'pages/reader/reader'
     ],
     window: {
       backgroundTextStyle: 'light',
