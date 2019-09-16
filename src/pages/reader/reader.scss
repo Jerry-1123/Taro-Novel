@@ -1,8 +1,128 @@
 @import "@/styles/scheme.scss";
+@import "~taro-ui/dist/style/components/drawer.scss";
+@import "~taro-ui/dist/style/components/list.scss";
 
 .reader {
-  .content {
-      line-height: 60rpx;
-      margin-top: 100rpx;
+  padding: 30rpx;
+
+  .title {
+    font-weight: bold;
+    margin-bottom: 20rpx;
   }
+
+  .content {
+    padding: 20px;
+    line-height: 85rpx;
+  }
+
+  .last {
+    font-family: "novel";
+    font-style: normal;
+    font-size: 30rpx;
+    color: $Red;
+    margin-bottom: 40rpx;
+    margin-top: 30rpx;
+
+    &::before {
+      content: "\e630";
+      margin-right: 10rpx;
+    }
+  }
+
+  .next {
+    font-size: 30rpx;
+    background: #fff5ee;
+    line-height: 80rpx;
+    text-align: center;
+    border-radius: 20rpx;
+    color: $Red;
+    margin-top: 20rpx;
+    margin-bottom: 120rpx;
+  }
+
+  .action {
+    position: fixed;
+    left: 0;
+    bottom: -500rpx;
+    z-index: 100;
+    width: 100%;
+    transition: all 0.3s ease-in-out 0s;
+    background-color: $White;
+    border-top: 1px solid $LineGray;
+    display: flex;
+    align-items: center;
+    padding: 10rpx 20rpx;
+
+    &-show {
+      bottom: 0;
+    }
+
+    .chapter,
+    .setting,
+    .eye {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+      flex-shrink: 0;
+
+      &-img {
+        width: 44rpx;
+        height: 44rpx;
+      }
+
+      &-txt {
+        font-size: 20rpx;
+        margin-top: 5rpx;
+        color: $LightBlack;
+      }
+    }
+
+    .add {
+      flex-grow: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 30rpx;
+        background-color: $LineGray;
+        padding: 8rpx 25rpx;
+
+        &-img {
+          width: 44rpx;
+          height: 44rpx;
+        }
+
+        &-txt {
+          font-size: 26rpx;
+          margin-left: 10rpx;
+          color: $LightBlack;
+        }
+      }
+    }
+  }
+}
+
+.hover {
+  opacity: 0.7;
+}
+
+.default {
+  color: $Black;
+  background-color: $White;
+}
+
+.protection {
+  color: $Black;
+  background-color: #cce8cf;
+}
+
+.night {
+  color: $White;
+  background-color: $DarkBlack;
 }

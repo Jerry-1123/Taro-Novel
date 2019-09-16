@@ -1,9 +1,13 @@
-import Taro, { useState, useEffect, useRouter } from '@tarojs/taro'
+import Taro, { useState, useEffect, useRouter, useCallback } from '@tarojs/taro'
+import { useDispatch } from '@tarojs/redux'
 import { View, Image } from '@tarojs/components'
 import API from '@/service/api'
 import Config from '@/config/config'
 import Util from '@/utils/util'
 import { format } from 'timeago.js'
+import {
+    dispatchChapters
+} from '@/actions/book'
 
 import './book-detail.scss'
 
@@ -17,6 +21,7 @@ import RecommendItem from './recommend-item/recommend-item'
 function BookDetail() {
 
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const [bookId, setBookId] = useState(0)
     const [isLoading, setLoading] = useState(true)
@@ -25,6 +30,12 @@ function BookDetail() {
     const [bookComments, setBookComments] = useState([])
     const [bookCommentsTotal, setBookCommentsTotal] = useState(0)
     const [bookRecommends, setBookRecommends] = useState([])
+
+    // 获取所有章节列表
+    const getChapterList = useCallback(
+        (id) => dispatch(dispatchChapters(id)),
+        [dispatch]
+    )
 
     useEffect(async () => {
         const id = router.params.id
@@ -61,9 +72,14 @@ function BookDetail() {
     }
 
     // 跳转章节
-    const handleGoChapter = () => {
+    const handleGoChapter = async () => {
+        Taro.showLoading({
+            title: '加载中...'
+        })
+        await getChapterList(bookDetail._id)
+        Taro.hideLoading()
         Taro.navigateTo({
-            url: `/pages/book-chapter/book-chapter?id=${bookDetail._id}&title=${bookDetail.title}`
+            url: `/pages/book-chapter/book-chapter?title=${bookDetail.title}`
         })
     }
 

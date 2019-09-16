@@ -1,31 +1,33 @@
-import Taro, { useState, useEffect, useRouter, useReachBottom } from '@tarojs/taro'
+import Taro, { useState, useEffect, useRouter, useReachBottom, useCallback } from '@tarojs/taro'
+import { useSelector, useDispatch } from '@tarojs/redux'
+import { createSelector } from 'reselect'
 import { View, Text } from '@tarojs/components'
-import API from '@/service/api'
 
 import './book-chapter.scss'
 
-import Loading from '@/components/loading/loading'
+import imgVip from '@/assets/images/vip.png'
+
+const selectChapters = () => {
+    return createSelector(
+        [state => state.book.chapters],
+        chapters => chapters
+    )
+}
 
 function BookChapter() {
 
     const router = useRouter()
 
-    const [isLoading, setLoading] = useState(true)
-    const [chapterList, setChapterList] = useState([])
+    // 所有章节列表
+    const chapterList = useSelector(selectChapters())
+
     const [list, setList] = useState([])
     const [index, setIndex] = useState(0)
 
     useEffect(async () => {
-        const { id, title } = router.params
+        const { title } = router.params
         Taro.setNavigationBarTitle({ title: title })
-
-        const res1 = await API.Book.getSummaryId(id)
-        const summaryId = res1[0]._id
-        const res2 = await API.Book.getChapter(summaryId)
-        setLoading(false)
-        setChapterList(res2.chapters)
-
-        if (res2.chapters.length === 0) {
+        if (chapterList.length === 0) {
             Taro.showModal({
                 title: '提示',
                 content: '本书暂无章节',
@@ -35,14 +37,21 @@ function BookChapter() {
                 }
             })
         } else {
-            setList(res2.chapters.slice(0, 100))
+            setList(chapterList.slice(0, 100))
         }
     }, [])
 
-    const handleGoReader = (item) => () => {
-        Taro.navigateTo({
-            url: `/pages/reader/reader?link=${item.link}`
-        })
+    const handleGoReader = (item, index) => () => {
+        if (item.isVip) {
+            Taro.showToast({
+                title: 'VIP章节暂未提供',
+                icon: 'none'
+            })
+        } else {
+            Taro.navigateTo({
+                url: `/pages/reader/reader?index=${index}&link=${item.link}`
+            })
+        }
     }
 
     useReachBottom(() => {
@@ -54,13 +63,13 @@ function BookChapter() {
 
     return (
         <View className='chapter'>
-            <Loading loading={isLoading} />
             <View className='list'>
                 {list.map((item, index) => {
                     return <View className='list-item' key={String(index)} hoverClass='hover'
-                        onClick={handleGoReader(item)}>
+                        onClick={handleGoReader(item, index)}>
                         <Text className='index'>{index + 1}.</Text>
                         <Text className='title'>{item.title}</Text>
+                        {item.isVip && <Image className='vip' src={imgVip} />}
                     </View>
                 })}
             </View>
