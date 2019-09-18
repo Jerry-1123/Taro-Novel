@@ -1,5 +1,5 @@
-import Taro, { useState, useEffect, useRouter, useReachBottom, useCallback } from '@tarojs/taro'
-import { useSelector, useDispatch } from '@tarojs/redux'
+import Taro, { useState, useEffect, useRouter, useReachBottom } from '@tarojs/taro'
+import { useSelector } from '@tarojs/redux'
 import { createSelector } from 'reselect'
 import { View, Text } from '@tarojs/components'
 
@@ -22,7 +22,7 @@ function BookChapter() {
     const chapterList = useSelector(selectChapters())
 
     const [list, setList] = useState([])
-    const [index, setIndex] = useState(0)
+    const [pageIndex, setPageIndex] = useState(0)
 
     useEffect(async () => {
         const { title } = router.params
@@ -49,15 +49,15 @@ function BookChapter() {
             })
         } else {
             Taro.navigateTo({
-                url: `/pages/reader/reader?index=${index}&link=${item.link}`
+                url: `/pages/reader/reader?index=${index}`
             })
         }
     }
 
     useReachBottom(() => {
         if (list.length !== chapterList.length) {
-            setList(list.concat(chapterList.slice((index + 1) * 100, (index + 2) * 100)))
-            setIndex(index + 1)
+            setList(list.concat(chapterList.slice((pageIndex + 1) * 100, (pageIndex + 2) * 100)))
+            setPageIndex(pageIndex + 1)
         }
     })
 

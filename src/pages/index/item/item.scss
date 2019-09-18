@@ -1,0 +1,30 @@
+@import "@/styles/scheme.scss";
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 19rpx;
+
+  .cover {
+    width: 200rpx;
+    height: 270rpx;
+    box-shadow: 0 0 10px 0 $ShadowBlack;
+  }
+
+  .title {
+    font-size: 28rpx;
+    margin-top: 20rpx;
+    color: $Black;
+    width: 200rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+}
+
+.hover {
+  opacity: 0.8;
+}

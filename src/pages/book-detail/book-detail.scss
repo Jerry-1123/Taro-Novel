@@ -4,6 +4,7 @@
 
 .detail {
   padding: 30rpx;
+  padding-bottom: 100rpx;
 
   // 顶部消息
   .header {
@@ -145,8 +146,39 @@
     display: flex;
   }
 
-  // 造作栏
+  // 图书信息
+  .copyright {
+    margin: 35rpx 0;
+    color: $DarkGray;
+    font-size: 28rpx;
+  }
+
+  // 操作栏
   .action-bar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px 0 $ShadowBlack;
+
+    .action{
+      flex-grow: 1;
+      text-align: center;
+      line-height: 90rpx;
+      font-size: 32rpx;
+    }
+
+    .add {
+      color: $Red;
+      background: $White;
+    }
+
+    .read {
+      color: $White;
+      background: $Red;
+    }
   }
 
   .section {

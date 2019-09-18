@@ -1,32 +1,37 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-
-import { add, minus, asyncAdd } from '../../actions/counter'
+import Taro, { useDidShow, useState } from '@tarojs/taro'
+import { View } from '@tarojs/components'
 
 import './index.scss'
 
+import Item from './item/item'
 
-@connect(
-  ({ }) => ({
+function Index() {
 
-  }),
-  {
+  const [books, setBooks] = useState([])
 
+  useDidShow(() => {
+    handleRefreshBooks()
+  })
+
+  const handleRefreshBooks = () => {
+    setBooks(Taro.getStorageSync('books') || [])
   }
-)
-class Index extends Component {
 
-  config = {
-    navigationBarTitleText: '首页'
-  }
+  return (
+    <View className='index'>
+      {books.map((item, index) => {
+        return <Item
+          className='list-item'
+          key={String(index)}
+          item={item}
+          onRefreshBooks={handleRefreshBooks} />
+      })}
+    </View>
+  )
+}
 
-  render() {
-    return (
-      <View className='index'>
-      </View>
-    )
-  }
+Index.config = {
+  navigationBarTitleText: '书架'
 }
 
 export default Index

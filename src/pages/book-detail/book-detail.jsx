@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRouter, useCallback } from '@tarojs/taro'
+import Taro, { useState, useEffect, useRouter, useCallback, useDidShow } from '@tarojs/taro'
 import { useDispatch } from '@tarojs/redux'
 import { View, Image } from '@tarojs/components'
 import API from '@/service/api'
@@ -12,8 +12,8 @@ import {
 import './book-detail.scss'
 
 import { AtRate } from 'taro-ui'
-import Loading from '@/components/loading/loading'
 import Modal from '@/components/modal/modal'
+import Blank from '@/components/blank/blank'
 import TagItem from './tag-item/tag-item'
 import CommentItem from './comment-item/comment-item'
 import RecommendItem from './recommend-item/recommend-item'
@@ -23,13 +23,12 @@ function BookDetail() {
     const router = useRouter()
     const dispatch = useDispatch()
 
-    const [bookId, setBookId] = useState(0)
-    const [isLoading, setLoading] = useState(true)
     const [showDetail, setShowDetail] = useState(false)
     const [bookDetail, setBookDetail] = useState(null)
     const [bookComments, setBookComments] = useState([])
     const [bookCommentsTotal, setBookCommentsTotal] = useState(0)
     const [bookRecommends, setBookRecommends] = useState([])
+    const [allBooks, setAllBooks] = useState([])
 
     // 获取所有章节列表
     const getChapterList = useCallback(
@@ -39,27 +38,54 @@ function BookDetail() {
 
     useEffect(async () => {
         const id = router.params.id
-        setBookId(id)
         // 获取基本详情
-        const res1 = await API.Book.getDetail(id)
-        setBookDetail(res1)
-        setLoading(false)
-        Taro.setNavigationBarTitle({
-            title: res1.title
-        })
+        initBookDetail(id)
         // 获取书评
-        const res2 = await API.Book.getCommentReview(id)
-        setBookComments(res2.reviews)
-        setBookCommentsTotal(res2.total)
+        initCommentList(id)
         // 获取推荐列表
-        const res3 = await API.Book.getRecommendList(id)
-        setBookRecommends(res3.books)
+        initRecommendList(id)
+        // 获取目录列表
+        initChapterList(id)
     }, [])
 
+    useDidShow(() => {
+        // 获取本地缓存书籍
+        setAllBooks(Taro.getStorageSync('books'))
+    })
+
+    const initBookDetail = async id => {
+        Taro.showLoading({
+            title: '加载中...'
+        })
+        const res = await API.Book.getDetail(id)
+        setBookDetail(res)
+        Taro.setNavigationBarTitle({
+            title: res.title
+        })
+        Taro.hideLoading()
+    }
+
+    const initCommentList = async id => {
+        const res = await API.Book.getCommentReview(id)
+        setBookComments(res.reviews)
+        setBookCommentsTotal(res.total)
+    }
+
+    const initRecommendList = async id => {
+        const res = await API.Book.getRecommendList(id)
+        setBookRecommends(res.books)
+    }
+
+    const initChapterList = async id => {
+        getChapterList(id)
+    }
+
+    // 显示详情
     const handleShowDetail = () => {
         setShowDetail(true)
     }
 
+    // 关闭详情
     const handleCloseDetail = () => {
         setShowDetail(false)
     }
@@ -73,11 +99,6 @@ function BookDetail() {
 
     // 跳转章节
     const handleGoChapter = async () => {
-        Taro.showLoading({
-            title: '加载中...'
-        })
-        await getChapterList(bookDetail._id)
-        Taro.hideLoading()
         Taro.navigateTo({
             url: `/pages/book-chapter/book-chapter?title=${bookDetail.title}`
         })
@@ -93,13 +114,55 @@ function BookDetail() {
     // 跳转推荐列表
     const handleGoRecommend = () => {
         Taro.navigateTo({
-            url: `/pages/book-recommend/book-recommend?id=${bookId}`
+            url: `/pages/book-recommend/book-recommend?id=${bookDetail._id}`
+        })
+    }
+
+    // 添加到本地
+    const handleAddToLocal = () => {
+        let books = Taro.getStorageSync('books') || []
+        let book = {
+            _id: bookDetail._id,
+            title: bookDetail.title,
+            cover: bookDetail.cover
+        }
+        if (!Util.isInArray(allBooks, bookDetail._id)) {
+            books.unshift(book)
+            Taro.setStorageSync('books', books)
+            Taro.switchTab({
+                url: '/pages/index/index'
+            })
+            Taro.showToast({
+                title: '添加成功',
+                icon: "success"
+            })
+        }
+    }
+
+    // 开始阅读(默认从0开始，如果本地有缓存跳转到看过的页面)
+    const handleGoRead = async () => {
+        let books = Taro.getStorageSync('books') || []
+        let booksIndex = Util.findIndexInArray(bookDetail, books)
+        if (booksIndex !== -1) {
+            books.splice(booksIndex, 1)
+            Taro.setStorageSync('books', books)
+            let book = {
+                _id: bookDetail._id,
+                title: bookDetail.title,
+                cover: bookDetail.cover
+            }
+            books.unshift(book)
+            Taro.setStorageSync('books', books)
+        }
+
+        const chapterIndex = Taro.getStorageSync(bookDetail._id) || 0
+        Taro.navigateTo({
+            url: `/pages/reader/reader?index=${chapterIndex}`
         })
     }
 
     return (
         <View className='detail'>
-            <Loading loading={isLoading} />
             {bookDetail !== null && <View>
                 {/* 顶部信息 */}
                 <View className='header'>
@@ -204,14 +267,25 @@ function BookDetail() {
                     </View>
                     <View className='divider' />
                 </View>}
+                {/* 图书信息 */}
+                <View className='section'>
+                    <View className='line' />
+                    <View className='title'>图书信息</View>
+                </View>
+                <View className='copyright'>{bookDetail.copyrightInfo}</View>
                 {/* 操作栏 */}
                 <View className='action-bar'>
+                    {(allBooks.length > 0 && bookDetail !== null && Util.isInArray(allBooks, bookDetail._id))
+                        ? <View className='action add' hoverClass='hover'>已加入书架</View>
+                        : <View className='action add' hoverClass='hover' onClick={handleAddToLocal}>加入书架</View>}
+                    <View className='action read' hoverClass='hover' onClick={handleGoRead}>开始阅读</View>
                 </View>
                 <Modal title='简介'
                     content={bookDetail.longIntro}
                     visible={showDetail}
                     onClose={handleCloseDetail} />
             </View>}
+            <Blank />
         </View>
     )
 }

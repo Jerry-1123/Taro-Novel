@@ -66,6 +66,29 @@ const Util = {
         } else {
             return wordCount
         }
+    },
+
+    isInArray: (array, _id) => {
+        if (array.length === 0) {
+            return false
+        } else {
+            const theArr = array.filter(item => item._id === _id)
+            if (theArr.length > 0) {
+                return true
+            } else {
+                return false
+            }
+        }
+    },
+
+    findIndexInArray: (obj, array) => {
+        let i = array.length;
+        while (i--) {
+            if (array[i]._id === obj._id) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
 

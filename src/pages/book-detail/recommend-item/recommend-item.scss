@@ -18,6 +18,11 @@
     color: $Black;
     margin-top: 10rpx;
     margin-bottom: 6rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 160rpx;
+    text-align: center;
   }
 
   .ratio {

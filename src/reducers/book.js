@@ -3,7 +3,8 @@ import {
 } from '@/constants/book'
 
 const defaultState = {
-    chapters: []
+    chapters: [],
+    bookId: 0
 }
 
 export default function counter(state = defaultState, action) {
@@ -11,7 +12,8 @@ export default function counter(state = defaultState, action) {
         case CHAPTER:
             return {
                 ...state,
-                chapters: action.chapters
+                chapters: action.chapters,
+                bookId: action.bookId
             }
         default:
             return state

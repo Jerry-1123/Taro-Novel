@@ -28,8 +28,8 @@
     align-items: center;
 
     .avatar {
-      width: 50rpx;
-      height: 50rpx;
+      width: 60rpx;
+      height: 60rpx;
       border-radius: 100%;
       margin-right: 20rpx;
     }
@@ -43,23 +43,23 @@
         align-items: center;
 
         .nickname {
-          font-size: 22rpx;
+          font-size: 24rpx;
           color: $DarkGray;
           margin-right: 10rpx;
         }
 
         .level {
-          font-size: 14rpx;
+          font-size: 20rpx;
           color: $DarkGray;
           border: 1px solid $Gray;
           border-radius: 20rpx;
-          padding: 2rpx 10rpx;
+          padding: 0 10rpx;
           margin-right: 10rpx;
         }
 
         .time {
           font-size: 20rpx;
-          color: $Gray;
+          color: $DarkGray;
         }
 
         .helpful {
@@ -70,7 +70,7 @@
         .male {
           font-family: "novel";
           font-style: normal;
-          font-size: 20rpx;
+          font-size: 24rpx;
           color: $Male;
 
           &::after {
@@ -81,7 +81,7 @@
         .female {
           font-family: "novel";
           font-style: normal;
-          font-size: 20rpx;
+          font-size: 24rpx;
           color: $Female;
 
           &::after {
@@ -93,7 +93,7 @@
           width: 100rpx;
         }
 
-        &:nth-child(2){
+        &:nth-child(2) {
           margin-top: 10rpx;
         }
       }

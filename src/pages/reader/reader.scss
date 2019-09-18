@@ -31,13 +31,20 @@
 
   .next {
     font-size: 30rpx;
-    background: #fff5ee;
     line-height: 80rpx;
     text-align: center;
     border-radius: 20rpx;
     color: $Red;
     margin-top: 20rpx;
-    margin-bottom: 120rpx;
+    margin-bottom: 90rpx;
+
+    &-default {
+      background: #fff5ee;
+    }
+
+    &-protection {
+      background: $LightProtection;
+    }
   }
 
   .action {
@@ -47,7 +54,6 @@
     z-index: 100;
     width: 100%;
     transition: all 0.3s ease-in-out 0s;
-    background-color: $White;
     border-top: 1px solid $LineGray;
     display: flex;
     align-items: center;
@@ -80,7 +86,7 @@
     }
 
     .add {
-      flex-grow: 2;
+      flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,7 +96,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 30rpx;
-        background-color: $LineGray;
+        background-color: $Gray;
         padding: 8rpx 25rpx;
 
         &-img {
@@ -106,6 +112,45 @@
       }
     }
   }
+
+  .setting-pop {
+    position: fixed;
+    left: 0;
+    bottom: -500rpx;
+    z-index: 90;
+    width: 100%;
+    transition: all 0.3s ease-in-out 0s;
+    display: flex;
+    align-items: center;
+    padding: 20rpx;
+    box-shadow: 0 2px 10px 0 $ShadowBlack;
+
+    &-show {
+      bottom: 96rpx;
+    }
+
+    .font {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      &-small {
+        flex-shrink: 0;
+        font-size: 26rpx;
+        padding: 10rpx;
+      }
+
+      &-big {
+        flex-shrink: 0;
+        padding: 10rpx;
+      }
+
+      .slider {
+        flex-grow: 1;
+        font-size: 32rpx;
+      }
+    }
+  }
 }
 
 .hover {
@@ -113,16 +158,21 @@
 }
 
 .default {
-  color: $Black;
-  background-color: $White;
+  color: $Black !important;
+  background-color: $White !important;
 }
 
 .protection {
-  color: $Black;
-  background-color: #cce8cf;
+  color: $Black !important;
+  background-color: $Protection !important;
 }
 
 .night {
-  color: $White;
-  background-color: $DarkBlack;
+  color: $White !important;
+  background-color: $DarkBlack !important;
+}
+
+.light-protection {
+  color: $Black !important;
+  background-color: $LightProtection !important;
 }

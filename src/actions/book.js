@@ -11,7 +11,8 @@ export const dispatchChapters = (bookId) => {
         const res2 = await API.Book.getChapter(summaryId)
         dispatch({
             type: CHAPTER,
-            chapters: res2.chapters
+            chapters: res2.chapters,
+            bookId: res2.book
         })
     }
 }

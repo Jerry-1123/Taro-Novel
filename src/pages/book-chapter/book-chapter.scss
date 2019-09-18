@@ -3,16 +3,16 @@
 .chapter {
   .list {
     &-item {
-      height: 80rpx;
-      line-height: 80rpx;
+      height: 85rpx;
+      line-height: 85rpx;
       padding: 0 30rpx;
-      font-size: 28rpx;
+      font-size: 30rpx;
       color: $Black;
       display: flex;
       align-items: center;
 
       .index {
-        margin-right: 30rpx;
+        margin-right: 28rpx;
         flex-shrink: 0;
       }
 

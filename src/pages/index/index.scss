@@ -1,4 +1,7 @@
+@import "@/styles/scheme.scss";
+
 .index {
-  flex-direction: column;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 21rpx;
 }
