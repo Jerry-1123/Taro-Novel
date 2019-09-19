@@ -1,0 +1,14 @@
+@import "@/styles/scheme.scss";
+
+.mall {
+  padding: 20rpx;
+
+  .search {
+    width: 100%;
+    font-family: "novel";
+
+    &::before {
+      content: "\e601";
+    }
+  }
+}
