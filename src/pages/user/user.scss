@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   padding: 50rpx;
+  color: $Black;
 
   .avatar {
     width: 200rpx;
@@ -15,10 +16,14 @@
   }
 
   .nickname {
-    color: $Black;
     font-size: 32rpx;
     margin-top: 30rpx;
-    margin-bottom: 50rpx;
+  }
+
+  .version {
+    font-size: 26rpx;
+    margin-top: 10rpx;
+    margin-bottom: 30rpx;
   }
 
   .github,
@@ -27,7 +32,6 @@
     font-family: "novel";
     width: 100%;
     font-size: 32rpx;
-    color: $Black;
     margin-top: 60rpx;
     display: flex;
     align-items: center;

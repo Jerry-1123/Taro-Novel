@@ -1,7 +1,7 @@
 import Taro, { useRouter, useState, useEffect, usePageScroll, useReachBottom } from '@tarojs/taro'
 import { useSelector } from '@tarojs/redux'
 import { createSelector } from 'reselect'
-import { View, Slider, Text } from '@tarojs/components'
+import { View, Slider, Text, Image } from '@tarojs/components'
 import API from '@/service/api'
 import classNames from 'classnames'
 import Util from '@/utils/util'
@@ -12,6 +12,7 @@ import imgChapter from '@/assets/images/chapter.png'
 import imgSetting from '@/assets/images/setting.png'
 import imgEye from '@/assets/images/eye.png'
 import imgBook from '@/assets/images/book.png'
+import imgVip from '@/assets/images/vip.png'
 
 import { AtDrawer } from 'taro-ui'
 
@@ -111,7 +112,15 @@ function Reader() {
     // 下一章
     const handleNextChapter = () => {
         const nextIndex = chapterIndex + 1
-        setChapterIndex(nextIndex)
+        const isVip = chapterList[nextIndex].isVip
+        if (isVip) {
+            Taro.showToast({
+                title: 'VIP章节暂未提供',
+                icon: 'none'
+            })
+        } else {
+            setChapterIndex(nextIndex)
+        }
     }
 
     // 弹出操作栏/隐藏操作栏
@@ -212,6 +221,19 @@ function Reader() {
         }
     }
 
+    // 点击选择章节
+    const handleClickChapterItem = (item, index) => () => {
+        if (item.isVip) {
+            Taro.showToast({
+                title: 'VIP章节暂未提供',
+                icon: 'none'
+            })
+        } else {
+            setChapterIndex(index)
+            handleCloseDrawer()
+        }
+    }
+
     return (
         <View className={classNames({
             'reader': true,
@@ -277,9 +299,19 @@ function Reader() {
             <AtDrawer mask
                 show={showDrawer}
                 onClose={handleCloseDrawer}>
-                <View className='drawer'>
+                <View className={classNames({
+                    'drawer': true,
+                    'drawer-default': wallpaperType === 0,
+                    'drawer-protection': wallpaperType === 1
+                })}>
                     {chapterList.slice(0, 100).map((item, index) => {
-                        return <View className='drawer-item' key={String(index)}>{item.title}</View>
+                        return <View className={classNames({
+                            'drawer-item': true,
+                            'drawer-item-selected': index === chapterIndex
+                        })} hoverClass='hover' key={String(index)} onClick={handleClickChapterItem(item, index)}>
+                            <View className='txt'>{item.title}</View>
+                            {item.isVip && <Image className='vip' src={imgVip}></Image>}
+                        </View>
                     })}
                 </View>
             </AtDrawer>

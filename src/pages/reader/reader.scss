@@ -151,6 +151,43 @@
       }
     }
   }
+
+  .drawer {
+    padding: 20rpx;
+
+    &-default {
+      background-color: $White !important;
+    }
+
+    &-protection {
+      background-color: $Protection !important;
+    }
+
+    &-item {
+      line-height: 80rpx;
+      font-size: 30rpx;
+      color: $Black;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-selected {
+        color: $Red;
+      }
+
+      .txt {
+        width: 350rpx;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .vip {
+        width: 35rpx;
+        height: 35rpx;
+      }
+    }
+  }
 }
 
 .hover {

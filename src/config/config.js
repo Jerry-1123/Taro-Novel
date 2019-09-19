@@ -1,4 +1,5 @@
 const Config = {
+    version: '1.0.0',
     /**
      * API域名
      */

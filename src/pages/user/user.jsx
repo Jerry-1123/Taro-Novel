@@ -1,25 +1,24 @@
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { View, OpenData } from '@tarojs/components'
+import Config from '@/config/config'
 
 import './user.scss'
 
 function User() {
 
-    // github主页
-    // 设置 清除缓存
-    // 关于
-
     const handleClickPage = () => {
         Taro.setClipboardData({
-            data: 'xx'
+            data: 'https://github.com/Jerry-1123/X-Novel'
         }).then(res => {
             console.log(res)
         })
     }
 
     const handleClickSetting = () => {
-        Taro.navigateTo({
-            url: '/pages/setting/setting'
+        Taro.clearStorageSync()
+        Taro.showToast({
+            title: '清理成功',
+            icon: 'success'
         })
     }
 
@@ -37,8 +36,9 @@ function User() {
             <View className='nickname'>
                 <OpenData type='userNickName'></OpenData>
             </View>
+            <View className='version'>{Config.version}</View>
             <View className='github' hoverClass='hover' onClick={handleClickPage}>项目地址</View>
-            <View className='setting' hoverClass='hover' onClick={handleClickSetting}>设置</View>
+            <View className='setting' hoverClass='hover' onClick={handleClickSetting}>清除缓存</View>
             <View className='about' hoverClass='hover' onClick={handleClickAbout}>关于</View>
         </View>
     )
