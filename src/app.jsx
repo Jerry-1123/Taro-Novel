@@ -26,6 +26,8 @@ class App extends Component {
       'pages/book-tag/book-tag',
       'pages/book-comment/book-comment',
       'pages/reader/reader',
+      'pages/setting/setting',
+      'pages/about/about',
       'pages/test/test'
     ],
     window: {
