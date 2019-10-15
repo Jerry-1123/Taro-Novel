@@ -9,17 +9,16 @@
 + Sass
 
 ### 运行
-
-> 
-> + git clone https://github.com/Jerry-1123/X-Novel.git
-> + cd X-Novel
-> + npm install
-> + npm run dev:weapp
-> + 使用测试AppId，勾选"不校验和法域名"
->
+```
++ git clone https://github.com/Jerry-1123/X-Novel.git
++ cd X-Novel
++ npm install
++ npm run dev:weapp
++ 使用测试AppId，勾选"不校验和法域名"
+```
 
 ### 截图
-<img src="/screenshot/index.png" width="320px">
-<img src="/screenshot/category.png" width="320px">
-<img src="/screenshot/detail.png" width="320px">
-<img src="/screenshot/novel.png" width="320px">
+| <img src="/screenshot/index.png" width="320px">| <img src="/screenshot/category.png" width="320px">| <img src="/screenshot/detail.png" width="320px">| <img src="/screenshot/novel.png" width="320px">
+
+### 我的个人博客
+[地址](https://xiarunhao.com/)
