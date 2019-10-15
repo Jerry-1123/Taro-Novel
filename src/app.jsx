@@ -47,12 +47,12 @@ class App extends Component {
           selectedIconPath: "./assets/images/index_selected.png",
           text: "书架"
         },
-        {
-          pagePath: "pages/mall/mall",
-          iconPath: "./assets/images/mall.png",
-          selectedIconPath: "./assets/images/mall_selected.png",
-          text: "书城"
-        },
+        // {
+        //   pagePath: "pages/mall/mall",
+        //   iconPath: "./assets/images/mall.png",
+        //   selectedIconPath: "./assets/images/mall_selected.png",
+        //   text: "书城"
+        // },
         {
           pagePath: "pages/category/category",
           iconPath: "./assets/images/category.png",
